@@ -1,0 +1,60 @@
+man /usr/share/man/man3/mlx.
+man /usr/share/man/man3/mlx_new_image.3
+
+man /usr/share/man/man3/mlx_pixel_put.1
+man /usr/share/man/man3/mlx_string_put.1
+
+
+int		mlx_pixel_put  (  void *mlx_ptr, void *win_ptr, int x, int y, int color);
+int		mlx_string_put ( void *mlx_ptr, void *win_ptr, int x, int y, int color, char *string );
+
+cc -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -framework OpenGL -framework Appkit
+
+r
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
