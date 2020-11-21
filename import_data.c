@@ -160,6 +160,8 @@ void			import_data()
 			import_map(line);
 			m.h++;
 		}
+		else
+			ft_perror("Non Valid Cub.config !!\n");
 		i = 0;
 		while (ptr[i])
 			free(ptr[i++]);
