@@ -39,7 +39,7 @@ int		ft_atoi(char *str, int *len)
 	}
 	if ((*str < '0' || *str > '9') && *str != '\0' && *str != ' ')
 			ft_perror("Invalid character ; !!");
-	str++;
+	//str++;
 	while (*str)
 	{
 		if (*str != '\0' && *str != ' ')

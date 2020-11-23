@@ -24,6 +24,17 @@ int 	finalize(void *s)
 	return (0);
 }
 
+int		ft_free(void **ptr)
+{
+	if (*ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+		return (1);
+	}
+	return (0);
+}
+
 int		ft_perror(const char *s)
 {
 	perror(s);

@@ -52,7 +52,6 @@ void	color_flo_cei(char *line)
 	r = ft_atoi(ptr[0], &r);
 	g = ft_atoi(ptr[1], &g);
 	b = ft_atoi(ptr[2], &b);
-
 	if (r < 0 || r > 256 || g < 0 || g > 256 || b < 0 || b > 256)
 		ft_perror("Invalid Color");
 	if (*line == 'F')
@@ -64,7 +63,11 @@ void	color_flo_cei(char *line)
 	{
 		is_set.color_c = (is_set.color_c == 0) ? 1 : ft_perror("Duplicate Ceil Color; Set One Color !\n");
 		CEIL_COLOR = (r * 256 * 256) + (g * 256) + b;
-	}	
+	}
+	i = 0;
+	while (ptr[i])
+		free(ptr[i++]);
+	free(ptr);
 }
 
 static	void	get_path_texture(char *line)
@@ -89,7 +92,7 @@ static	void	get_path_texture(char *line)
 		texture_sp.path = ft_strdup(ptr);
 	if (ptr)
 		free(ptr);
-}
+	}
 
 static	int		is_path_texture(char *line)
 {
@@ -129,7 +132,7 @@ void			import_data()
 	char 	**ptr;
 
 	return_val = 1;
-	fd = fileno(fopen("conf.cub" , "r"));
+	fd = open("conf.cub", O_RDONLY);
 	m.w = 0;
 	m.h = 0;
 	m.ptr = ft_strdup("");
@@ -166,13 +169,12 @@ void			import_data()
 		while (ptr[i])
 			free(ptr[i++]);
 		free(ptr);
+		if (line)
+			free(line);
 	}
 	if (!is_all_elem())
 		ft_perror("Missing Element(s) in Config File !!\n");
-	if (line)
-		free(line);
 	fill_map();
 	get_texture();
 	fclose(fopen("conf.cub" , "r"));
-	//exit(EXIT_SUCCESS);
 }

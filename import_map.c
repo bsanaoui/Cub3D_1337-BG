@@ -101,12 +101,11 @@ void    fill_map()
         m.map[i][j] = '\0';
 	i++;
     }
+    i = 0;
+	while (line [i])
+		free(line[i++]);
+	free(line);
     if (!is_set.player)
         ft_perror("There is no Player in Map !!\n");
-//     printf("--------------- MAP -----------------\n");
-//    i = 0;
-//     while(i < m.h)
-// 		printf("%s\n",m.map[i++]);
-//     printf("---------------------------------------\n");
   	check_map();
 }

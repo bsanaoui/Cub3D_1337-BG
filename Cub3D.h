@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <math.h>
 # include "get_next_line.h"
 # include "mlx.h"
@@ -34,8 +35,6 @@ int		TILE_SIZE_P;
 int 	WALL_COLOR;
 int 	FLOOR_COLOR;
 int 	CEIL_COLOR;
-int		key_pressed;
-int		key_released;
 int		size_line_texture;
 int 	TEX_WIDTH;
 int 	TEX_HEIGHT;
@@ -203,6 +202,7 @@ t_texture			text_no;
 t_texture			text_so;
 t_texture			text_we;
 t_texture			text_ea;
+int					keys[7];
 
 void		ft_putchar(char c);
 void		ft_putnbr(int nb);
@@ -216,7 +216,7 @@ char		*ft_strtrim(char const *s1, char const *set);
 int			update();
 int			key_press(int key);
 int			key_release(int key);
-void		move_player();
+void		move_player(int key);
 void		create_2d_map(void);
 void		create_grid(int i, int j);
 void		create_player2d();

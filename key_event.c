@@ -14,14 +14,20 @@
 
 int	update()
 {
-	if(!key_released)
+	int i;
+
+	i = 0;
+	while (i < 7)
 	{
-		move_player();
-		clear_sprites();
-		ray();
-		render3DProjectedWalls();
-		render_mini_map();
+		if (keys[i])
+			move_player(keys[i]);
+
+		i++;
 	}
+	clear_sprites();
+	ray();
+	render3DProjectedWalls();
+	render_mini_map();
 	return (0);
 }
 
@@ -34,23 +40,23 @@ int			is_wall(int walkDirection, int kindMove) // kind_move 1 if move up_down an
 	moveStep = walkDirection * MOVE_SPEED;
 	x_index = (player.x + (cos(kindMove ? player.Angle : player.Angle - M_PI / 2) * moveStep)) / TILE_SIZE;
 	y_index = (player.y + (sin(kindMove ? player.Angle : player.Angle - M_PI / 2) * moveStep)) / TILE_SIZE;
-	if ((y_index < m.h && x_index < m.w) && (m.map[y_index][x_index] == '1' || m.map[y_index][x_index] == '2'))
-		return (0);  //error
+	if ((y_index < m.h && x_index < m.w) && (m.map[y_index][x_index] == '1' /*|| m.map[y_index][x_index] == '2'*/))
+		return (1);  //error
 	return (0);
 }
 
-int		is_sprite(int dist)
-{
-	int	i;
+// int		is_sprite(int dist)
+// {
+// 	int	i;
 
-	i = 0;
-	while (i < count_sprite)
-	{
-		if (sprites[i++].distance < dist)
-			return (0);
-	}
-	return(0);
-}
+// 	i = 0;
+// 	while (i < count_sprite)
+// 	{
+// 		if (sprites[i++].distance < dist)
+// 			return (1);
+// 	}
+// 	return(0);
+// }
 
 void		move_walkDirection_direct(int sign_walkDirection)
 {
@@ -80,14 +86,37 @@ void		move_turnDirection(int sign_turnDirection)
 
 int			key_release(int key)
 {
-	key_released = 1;
+	if (key == 13)
+		keys[0] = 0;
+	if (key == 1)
+		keys[1] = 0;
+	if (key == 0)
+		keys[2] = 0;
+	if (key == 2)
+		keys[3] = 0;
+	if (key == 123)
+		keys[4] = 0;
+	if (key == 124)
+		keys[5] = 0;
 	return (key);
 }
 
 int			key_press(int key)
 {
-	key_pressed = key;
-	key_released = 0;
+	if (key == 13)
+		keys[0] = key;
+	if (key == 1)
+		keys[1] = key;
+	if (key == 0)
+		keys[2] = -5;
+	if (key == 2)
+		keys[3] = key;
+	if (key == 123)
+		keys[4] = key;
+	if (key == 124)
+		keys[5] = key;
+	if (key == 53)
+		keys[6] = key;
 	return (key);
 }
 
@@ -113,40 +142,21 @@ void		speedcontrol(int key_pressed)
 		ROTATION_SPEED = (5.0 * (M_PI / 180));
 }
 
-// void		move_player()
-// {
-// 	if (key_pressed == 2 && !is_wall(-1, 0)) // D
-// 			move_walkDirection_side(1);
-// 	if (key_pressed == 1 && !is_wall(-1, 1)) // S 
-// 			move_walkDirection_direct(1);
-// 	if (key_pressed == 0 && !is_wall(1, 0)) // A 
-// 			move_walkDirection_side(-1);
-// 	if (key_pressed == 13 && !is_wall(1, 1)) // W
-// 			move_walkDirection_direct(-1);
-// 	if (key_pressed == 123) // <-- 
-// 			move_turnDirection(-1);
-// 	if (key_pressed == 124) // --> 
-// 			move_turnDirection(1);
-// 	speedcontrol(key_pressed);
-// 	if (key_pressed == 53)
-// 		finalize(NULL);
-// }
-
-void		move_player()
+void		move_player(int key)
 {
-	if (key_pressed == 2) // D
+	if (key == 2 && !is_wall(-1, 0) && rays[n_rays - 1].distance > 20) // D
 			move_walkDirection_side(1);
-	if (key_pressed == 1) // S 
+	if (key == 1 && !is_wall(-1, 1)) // S 
 			move_walkDirection_direct(1);
-	if (key_pressed == 0) // A 
+	if (key == -5 && !is_wall(1, 0) && rays[0].distance > 20) // A 
 			move_walkDirection_side(-1);
-	if (key_pressed == 13) // W
+	if (key == 13 && !is_wall(1, 1) && rays[n_rays / 2].distance > 22) // W
 			move_walkDirection_direct(-1);
-	if (key_pressed == 123) // <-- 
+	if (key == 123 && rays[0].distance > 20) // <-- 
 			move_turnDirection(-1);
-	if (key_pressed == 124) // --> 
+	if (key == 124 && rays[n_rays - 1].distance > 20) // --> 
 			move_turnDirection(1);
-	speedcontrol(key_pressed);
-	if (key_pressed == 53)
+	speedcontrol(key);
+	if (key == 53)
 		finalize(NULL);
 }

@@ -12,6 +12,11 @@
 
 #include "Cub3D.h"
 
+void	ft_screenshoot()
+{
+	int fd = open("screen.bmp", O_CREAT | O_RDWR);
+}
+
 void	InitGame()
 {
 	mlx.ptr = mlx_init();
@@ -21,7 +26,6 @@ void	InitGame()
 	reset_elem_conf();
 	import_data();
 	WALL_COLOR = 0xffffff;
-	key_released = 1;
 	player.turnDirection = 0;
 	player.walkDirection = 0;
 	player.fov = 60 * M_PI / 180;
@@ -30,7 +34,7 @@ void	InitGame()
 	n_rays = mlx.WIN_W / wall_strip_width;
 	rays = (T_RAYS *)(malloc(n_rays * sizeof(T_RAYS)));
 	sprites = (T_SPRITE *)(malloc(n_sp * sizeof(T_SPRITE)));
-	mlx.win = mlx_new_window(mlx.ptr, mlx.WIN_W , mlx.WIN_H, "CMOS WIN");
+	mlx.win = mlx_new_window(mlx.ptr, mlx.WIN_W , mlx.WIN_H, "Cub3D");
 }
 
 void	render()
@@ -41,6 +45,7 @@ void	render()
 	create_player2d();//character
 	ray();
 	render3DProjectedWalls();
+	ft_screenshoot();
 	render_mini_map();
 	mlx_hook(mlx.win,2,1L<<0, key_press, NULL);
 	mlx_hook(mlx.win,3,1L<<1, key_release, NULL);
