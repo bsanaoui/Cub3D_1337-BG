@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
-void	ft_screenshoot()
-{
-	int fd = open("screen.bmp", O_CREAT | O_RDWR);
-}
+// void	ft_screenshoot()
+// {
+// 	int fd = open("screen.bmp", O_CREAT | O_RDWR);
+// }
 
 void	InitGame()
 {
 	mlx.ptr = mlx_init();
 	ROTATION_SPEED = (2.0 * (M_PI / 180));
-	MOVE_SPEED = 4.2;
+	MOVE_SPEED = 4.0;
 	newline = 0;
 	reset_elem_conf();
 	import_data();
@@ -34,19 +34,19 @@ void	InitGame()
 	n_rays = mlx.WIN_W / wall_strip_width;
 	rays = (T_RAYS *)(malloc(n_rays * sizeof(T_RAYS)));
 	sprites = (T_SPRITE *)(malloc(n_sp * sizeof(T_SPRITE)));
-	mlx.win = mlx_new_window(mlx.ptr, mlx.WIN_W , mlx.WIN_H, "Cub3D");
+	mlx.win = mlx_new_window(mlx.ptr, mlx.WIN_W , mlx.WIN_H, "cub3D");
 }
 
 void	render()
 {
-	map_img.img = mlx_new_image(mlx.ptr, map_img.w = mlx.WIN_W * MINIMAP_SCALE_FACTOR, map_img.h = mlx.WIN_H * MINIMAP_SCALE_FACTOR); //image of maps
-	player_img.img = mlx_new_image(mlx.ptr, player_img.w = TILE_SIZE_P * MINIMAP_SCALE_FACTOR, player_img.h = TILE_SIZE_P * MINIMAP_SCALE_FACTOR); // image of player
+	map_img.img = mlx_new_image(mlx.ptr, map_img.w = mlx.WIN_W * MAP_SC, map_img.h = mlx.WIN_H * MAP_SC); //image of maps
+	player_img.img = mlx_new_image(mlx.ptr, player_img.w = TILE_SIZE_P * MAP_SC, player_img.h = TILE_SIZE_P * MAP_SC); // image of player
 	project_3d.img = mlx_new_image(mlx.ptr, project_3d.w = mlx.WIN_W , project_3d.h = mlx.WIN_H);
 	create_player2d();//character
 	ray();
 	render3DProjectedWalls();
-	ft_screenshoot();
-	render_mini_map();
+	//ft_screenshoot();
+	//render_mini_map();
 	mlx_hook(mlx.win,2,1L<<0, key_press, NULL);
 	mlx_hook(mlx.win,3,1L<<1, key_release, NULL);
 	mlx_hook(mlx.win,17, 0L, finalize, NULL);

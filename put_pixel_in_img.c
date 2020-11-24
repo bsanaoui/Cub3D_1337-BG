@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
 void	put_pixel_in_img(t_img s_img, int x, int y, int color)
 {

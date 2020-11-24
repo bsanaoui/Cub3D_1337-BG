@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
 static int	is_instr(int c, char const *set)
 {

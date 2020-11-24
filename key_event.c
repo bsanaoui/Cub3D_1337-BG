@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
 int	update()
 {
@@ -27,7 +27,7 @@ int	update()
 	clear_sprites();
 	ray();
 	render3DProjectedWalls();
-	render_mini_map();
+	//render_mini_map();
 	return (0);
 }
 
@@ -40,23 +40,10 @@ int			is_wall(int walkDirection, int kindMove) // kind_move 1 if move up_down an
 	moveStep = walkDirection * MOVE_SPEED;
 	x_index = (player.x + (cos(kindMove ? player.Angle : player.Angle - M_PI / 2) * moveStep)) / TILE_SIZE;
 	y_index = (player.y + (sin(kindMove ? player.Angle : player.Angle - M_PI / 2) * moveStep)) / TILE_SIZE;
-	if ((y_index < m.h && x_index < m.w) && (m.map[y_index][x_index] == '1' /*|| m.map[y_index][x_index] == '2'*/))
+	if ((y_index < m.h && x_index < m.w) && (m.map[y_index][x_index] == '1'))
 		return (1);  //error
 	return (0);
 }
-
-// int		is_sprite(int dist)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (i < count_sprite)
-// 	{
-// 		if (sprites[i++].distance < dist)
-// 			return (1);
-// 	}
-// 	return(0);
-// }
 
 void		move_walkDirection_direct(int sign_walkDirection)
 {

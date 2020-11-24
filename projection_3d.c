@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
-static int		get_offset_x(int ray_n)
+static float		get_offset_x(int ray_n)
 {
 	if (rays[ray_n].was_hit_vertical)
-		return ((int)rays[ray_n].wallHit.Y % TILE_SIZE);
-	return ((int)rays[ray_n].wallHit.X % TILE_SIZE);
+		return ((int)rays[ray_n].wallHit.Y % (int)TILE_SIZE);
+	return ((int)rays[ray_n].wallHit.X % (int)TILE_SIZE);
 }
 
 void			render3DProjectedWalls()

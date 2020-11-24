@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
 void	import_map(char *line)
 {
@@ -74,7 +74,7 @@ void    fill_map()
 
     if (ft_strlen(m.ptr) < 4)
         ft_perror("No Map!!|n");
-    TILE_SIZE = mlx.WIN_W / m.w ;
+    TILE_SIZE = ((mlx.WIN_H / m.h) < (mlx.WIN_W / m.w)) ? (mlx.WIN_H / m.h) : (mlx.WIN_W / m.w) ;
     if (TILE_SIZE == 0)
         TILE_SIZE = 1;
 	TILE_SIZE_P = mlx.WIN_W / m.w / 2;

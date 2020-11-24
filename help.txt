@@ -12,6 +12,7 @@ cc -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -framework OpenGL -fram
 
 r
 
+R 960 640
 
 
 

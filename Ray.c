@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
 static T_RAY 		direction_ray(float rayAngle, int n_ray)
 {
@@ -113,7 +113,7 @@ void	create_rays()
 	i = 0;
 	while (i < n_rays)
 	{
-		line(player.x * MINIMAP_SCALE_FACTOR, player.y * MINIMAP_SCALE_FACTOR, rays[i].wallHit.X * MINIMAP_SCALE_FACTOR, rays[i].wallHit.Y * MINIMAP_SCALE_FACTOR);
+		line(player.x * MAP_SC, player.y * MAP_SC, rays[i].wallHit.X * MAP_SC, rays[i].wallHit.Y * MAP_SC);
 		i++;
 	}
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
 int 	finalize(void *s)
 {
@@ -97,16 +97,16 @@ static 	int 	get_color_text(int k, int j, float h, int offset_x)
 {
 	if (k == 0)
 		if(((offset_x * text_we.w / TILE_SIZE) + (text_we.w * j * text_we.h / h)) < (text_we.h * text_we.w))
-					return(text_we.data[(offset_x * (text_we.w/ TILE_SIZE) + (text_we.w * (int)(j * text_we.h / h)))]);
+					return(text_we.data[(offset_x * (int)(text_we.w/ TILE_SIZE) + (text_we.w * (int)(j * text_we.h / h)))]);
 	if (k == 1)
 		if((offset_x * text_ea.w / TILE_SIZE) + (text_ea.w * j * text_ea.h / h) < (text_ea.h * text_ea.w))
-					return(text_ea.data[(offset_x * (text_ea.w/ TILE_SIZE) + (text_ea.w * (int)(j * text_ea.h / h)))]);
+					return(text_ea.data[(offset_x * (int)(text_ea.w/ TILE_SIZE) + (text_ea.w * (int)(j * text_ea.h / h)))]);
 	if (k == 2)
 		if((offset_x * text_so.w / TILE_SIZE) + (text_so.w * j * text_ea.h / h) < (text_so.h * text_so.w))
-					return(text_so.data[(offset_x * (text_so.w/ TILE_SIZE) + (text_so.w * (int)(j * text_so.h / h)))]);
+					return(text_so.data[(offset_x * (int)(text_so.w/ TILE_SIZE) + (text_so.w * (int)(j * text_so.h / h)))]);
 	if (k == 3)
 		if((offset_x * text_no.w / TILE_SIZE) + (text_no.w * j * text_no.h / h) < (text_no.h * text_no.w))
-					return(text_no.data[(offset_x * (text_no.w/ TILE_SIZE) + (text_no.w * (int)(j * text_no.h / h)))]);
+					return(text_no.data[(offset_x * (int)(text_no.w/ TILE_SIZE) + (text_no.w * (int)(j * text_no.h / h)))]);
 	return (0);
 }
 

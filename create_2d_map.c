@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
 void	create_grid(int i, int j)
 {
@@ -22,7 +22,7 @@ void	create_grid(int i, int j)
 	{
 		y = j;
 		while (y < TILE_SIZE + j)
-			put_pixel_in_img(map_img, MINIMAP_SCALE_FACTOR * x,MINIMAP_SCALE_FACTOR * y++, FLOOR_COLOR);
+			put_pixel_in_img(map_img, MAP_SC * x,MAP_SC * y++, FLOOR_COLOR);
 		x++;
 	}
 }
@@ -37,7 +37,7 @@ static	void	create_2d_sprite(int i, int j)
 	{
 		y = j;
 		while (y < (TILE_SIZE - 2 + j))
-			put_pixel_in_img(map_img, MINIMAP_SCALE_FACTOR * x,MINIMAP_SCALE_FACTOR * y++, SPRITE_COLOR);
+			put_pixel_in_img(map_img, MAP_SC * x,MAP_SC * y++, SPRITE_COLOR);
 		x++;
 	}
 }

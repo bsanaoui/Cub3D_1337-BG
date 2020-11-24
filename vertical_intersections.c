@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
 static T_CAST	calculate_steps(T_CAST cast, T_RAY ray)
 {

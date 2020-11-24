@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Cub3D.h"
+#include "cub3d.h"
 
 void		create_player2d()
 {
@@ -22,7 +22,7 @@ void		create_player2d()
 	{
 		y = 0;
 		while (y < TILE_SIZE_P)
-			put_pixel_in_img(player_img, x * MINIMAP_SCALE_FACTOR, MINIMAP_SCALE_FACTOR * y++, COLOR_PLAYER);
+			put_pixel_in_img(player_img, x * MAP_SC, MAP_SC * y++, COLOR_PLAYER);
 		x++;
 	}
 }
@@ -34,5 +34,5 @@ void		display_player()
 
 	x = player.x - (TILE_SIZE_P / 2);
 	y = player.y - (TILE_SIZE_P / 2);
-	mlx_put_image_to_window(mlx.ptr, mlx.win, player_img.img, x * MINIMAP_SCALE_FACTOR, y * MINIMAP_SCALE_FACTOR);
+	mlx_put_image_to_window(mlx.ptr, mlx.win, player_img.img, x * MAP_SC, y * MAP_SC);
 }

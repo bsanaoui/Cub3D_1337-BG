@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "Cub3D.h"
+#include "cub3d.h"
 
 static size_t		len_word(const char *s, char c)
 {

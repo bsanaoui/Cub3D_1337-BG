@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsanaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef Cub3D_H
-# define Cub3D_H
-
+#ifndef cub3d_h
+# define CUB3D_H
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -21,8 +20,7 @@
 # include "mlx.h"
 # include <stdio.h>
 
-
-#define MINIMAP_SCALE_FACTOR 0.3
+#define MAP_SC 0.3
 #define	COLOR_PLAYER 16711680
 #define	RAY_COLOR 16776960
 #define	MAP_COLOR 3093151
@@ -30,8 +28,8 @@
 
 float	ROTATION_SPEED;
 float	MOVE_SPEED;
-int		TILE_SIZE;
-int		TILE_SIZE_P;
+float	TILE_SIZE;
+float	TILE_SIZE_P;
 int 	WALL_COLOR;
 int 	FLOOR_COLOR;
 int 	CEIL_COLOR;
@@ -78,10 +76,10 @@ typedef struct player
 {
 	double 	x;
 	double 	y;
-	int		turnDirection; // -1 if left , +1 if right
+	int		turnDirection;
 	int		walkDirection;
 	double	Angle;
-	float	rotationSpeed; // how many frames/second it will rotate
+	float	rotationSpeed;
 	double 	fov;
 } T_PLAYER ;
 
@@ -185,7 +183,6 @@ typedef struct is_set_el
 	int	color_f;
 	int	color_c;
 	int	player;
-
 } t_is_set_el;
 
 t_map				m;
@@ -232,7 +229,7 @@ T_CAST		horizontal_intersections(T_RAY ray);
 T_CAST		vertical_intersections(T_RAY ray);
 float		distance(float x1, float x2, float y1, float y2);
 void		render3DProjectedWalls();
-void		create_strip_height(float tab[], int color); //tab[] = {float x, float y, float width, float height}
+void		create_strip_height(float tab[], int color);
 void		create_strip_wall(float tab[], int offset_x, int n_ray);
 void		create_rays();
 void		render_mini_map();
