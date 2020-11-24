@@ -20,49 +20,45 @@
 # include "mlx.h"
 # include <stdio.h>
 
-#define MAP_SC 0.3
-#define	COLOR_PLAYER 16711680
-#define	RAY_COLOR 16776960
-#define	MAP_COLOR 3093151
-#define	SPRITE_COLOR 14557865
+# define MAP_SC 0.3
+# define PLAYER_COLOR 16711680
+# define RAY_COLOR 16776960
+# define MAP_COLOR 3093151
+# define SPRITE_COLOR 14557865
 
-float	ROTATION_SPEED;
-float	MOVE_SPEED;
-float	TILE_SIZE;
-float	TILE_SIZE_P;
-int 	WALL_COLOR;
-int 	FLOOR_COLOR;
-int 	CEIL_COLOR;
-int		size_line_texture;
-int 	TEX_WIDTH;
-int 	TEX_HEIGHT;
-int		n_rays;
-int		wall_strip_width;
-int		count_sprite;
-int		n_sp;
-int		newline;
+float	g_rot_speed;
+float	g_move_speed;
+float	g_tile;
+float	g_tile_p;
+int 	g_floor_color;
+int 	g_ceil_color;
+int		g_nb_ray;
+int		g_wall_strip_w;
+int		g_index_sp;
+int		g_n_sp;
+int		g_newline;
 
-typedef struct vector
+typedef struct	s_vector
 {
 	double	x;
 	double	y;
-} t_vector;
+}				t_vector;
 
-typedef struct map
+typedef struct 	s_map
 {
 	char	*ptr;
 	char	**map;
 	int		w;
 	int		h;
-} t_map;
+} 				t_map;
 
-typedef struct img
+typedef struct	img
 {
 	void 	*img;
 	int		h;
 	int		w;
 	int		*data;
-} t_img ;
+} 				t_img;
 
 typedef struct mlx_var
 {

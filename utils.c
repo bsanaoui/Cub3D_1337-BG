@@ -57,8 +57,8 @@ int		hasWallAt(int x, int y)
 	int	index_x;
 	int	index_y;
 
-	index_x = x / TILE_SIZE;
-	index_y = y / TILE_SIZE;
+	index_x = x / g_tile;
+	index_y = y / g_tile;
 
 	if (index_y < m.h && index_x < m.w)
 	{
@@ -96,17 +96,17 @@ void	create_strip_height(float tab[], int color) // tab[] = {float x, float y, f
 static 	int 	get_color_text(int k, int j, float h, int offset_x)
 {
 	if (k == 0)
-		if(((offset_x * text_we.w / TILE_SIZE) + (text_we.w * j * text_we.h / h)) < (text_we.h * text_we.w))
-					return(text_we.data[(offset_x * (int)(text_we.w/ TILE_SIZE) + (text_we.w * (int)(j * text_we.h / h)))]);
+		if(((offset_x * text_we.w / g_tile) + (text_we.w * j * text_we.h / h)) < (text_we.h * text_we.w))
+					return(text_we.data[(offset_x * (int)(text_we.w/ g_tile) + (text_we.w * (int)(j * text_we.h / h)))]);
 	if (k == 1)
-		if((offset_x * text_ea.w / TILE_SIZE) + (text_ea.w * j * text_ea.h / h) < (text_ea.h * text_ea.w))
-					return(text_ea.data[(offset_x * (int)(text_ea.w/ TILE_SIZE) + (text_ea.w * (int)(j * text_ea.h / h)))]);
+		if((offset_x * text_ea.w / g_tile) + (text_ea.w * j * text_ea.h / h) < (text_ea.h * text_ea.w))
+					return(text_ea.data[(offset_x * (int)(text_ea.w/ g_tile) + (text_ea.w * (int)(j * text_ea.h / h)))]);
 	if (k == 2)
-		if((offset_x * text_so.w / TILE_SIZE) + (text_so.w * j * text_ea.h / h) < (text_so.h * text_so.w))
-					return(text_so.data[(offset_x * (int)(text_so.w/ TILE_SIZE) + (text_so.w * (int)(j * text_so.h / h)))]);
+		if((offset_x * text_so.w / g_tile) + (text_so.w * j * text_ea.h / h) < (text_so.h * text_so.w))
+					return(text_so.data[(offset_x * (int)(text_so.w/ g_tile) + (text_so.w * (int)(j * text_so.h / h)))]);
 	if (k == 3)
-		if((offset_x * text_no.w / TILE_SIZE) + (text_no.w * j * text_no.h / h) < (text_no.h * text_no.w))
-					return(text_no.data[(offset_x * (int)(text_no.w/ TILE_SIZE) + (text_no.w * (int)(j * text_no.h / h)))]);
+		if((offset_x * text_no.w / g_tile) + (text_no.w * j * text_no.h / h) < (text_no.h * text_no.w))
+					return(text_no.data[(offset_x * (int)(text_no.w/ g_tile) + (text_no.w * (int)(j * text_no.h / h)))]);
 	return (0);
 }
 

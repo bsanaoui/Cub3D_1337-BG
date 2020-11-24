@@ -57,12 +57,12 @@ void	color_flo_cei(char *line)
 	if (*line == 'F')
 	{
 		is_set.color_f = (is_set.color_f == 0) ? 1 : ft_perror("Duplicate Floor Color; Set One Color !\n");
-		FLOOR_COLOR = (r * 256 * 256) + (g * 256) + b;
+		g_floor_color = (r * 256 * 256) + (g * 256) + b;
 	}
 	else
 	{
 		is_set.color_c = (is_set.color_c == 0) ? 1 : ft_perror("Duplicate Ceil Color; Set One Color !\n");
-		CEIL_COLOR = (r * 256 * 256) + (g * 256) + b;
+		g_ceil_color = (r * 256 * 256) + (g * 256) + b;
 	}
 	i = 0;
 	while (ptr[i])
@@ -140,14 +140,14 @@ void			import_data()
 	{
 		i = 0;
 		return_val = get_next_line(fd, &line);
-		if (is_line_empty(line) && (m.h == 0 || newline))
+		if (is_line_empty(line) && (m.h == 0 || g_newline))
 			continue ;
-		else if (is_line_empty(line) && m.h > 0 && newline == 0)
+		else if (is_line_empty(line) && m.h > 0 && g_newline == 0)
 		{
-			newline++;
+			g_newline++;
 			continue ;
 		}
-		else if (newline)
+		else if (g_newline)
 			ft_perror("Map Invalid; Empty Line !!\n");
 		ptr = ft_split(line, ' ');
 		if (**ptr == 'R')

@@ -15,8 +15,8 @@
 static float		get_offset_x(int ray_n)
 {
 	if (rays[ray_n].was_hit_vertical)
-		return ((int)rays[ray_n].wallHit.Y % (int)TILE_SIZE);
-	return ((int)rays[ray_n].wallHit.X % (int)TILE_SIZE);
+		return ((int)rays[ray_n].wallHit.Y % (int)g_tile);
+	return ((int)rays[ray_n].wallHit.X % (int)g_tile);
 }
 
 void			render3DProjectedWalls()
@@ -29,13 +29,13 @@ void			render3DProjectedWalls()
 	project_3d.img = mlx_new_image(mlx.ptr, mlx.WIN_W , mlx.WIN_H); 
 	distanceProjectionPlane = (mlx.WIN_W / 2) / tan(player.fov / 2); 
 	i = 0;
-	while(i < n_rays)
+	while(i < g_nb_ray)
 	{
 		correctWallDistance = rays[i].distance * cos(rays[i].rayAngle - player.Angle);
-		wallStripHeight = (TILE_SIZE / correctWallDistance) * distanceProjectionPlane;
-		create_strip_wall((float[]){i * wall_strip_width, (mlx.WIN_H / 2) - (wallStripHeight / 2), wall_strip_width, wallStripHeight}, get_offset_x(i), i);
-		create_strip_height((float[]){i * wall_strip_width, 0, wall_strip_width, (mlx.WIN_H - wallStripHeight) / 2 }, CEIL_COLOR);
-		create_strip_height((float[]){i * wall_strip_width, wallStripHeight  + ((mlx.WIN_H - wallStripHeight) / 2), wall_strip_width, (mlx.WIN_H - wallStripHeight) / 2}, FLOOR_COLOR);
+		wallStripHeight = (g_tile / correctWallDistance) * distanceProjectionPlane;
+		create_strip_wall((float[]){i * g_wall_strip_w, (mlx.WIN_H / 2) - (wallStripHeight / 2), g_wall_strip_w, wallStripHeight}, get_offset_x(i), i);
+		create_strip_height((float[]){i * g_wall_strip_w, 0, g_wall_strip_w, (mlx.WIN_H - wallStripHeight) / 2 }, g_ceil_color);
+		create_strip_height((float[]){i * g_wall_strip_w, wallStripHeight  + ((mlx.WIN_H - wallStripHeight) / 2), g_wall_strip_w, (mlx.WIN_H - wallStripHeight) / 2}, g_floor_color);
 		i++;
 	}
 	render_sprites(); /////////// SPRITE RENDRINNG

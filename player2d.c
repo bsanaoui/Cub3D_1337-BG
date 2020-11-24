@@ -18,11 +18,11 @@ void		create_player2d()
 	int y;
 
 	x = 0;
-	while (x < TILE_SIZE_P)
+	while (x < g_tile_p)
 	{
 		y = 0;
-		while (y < TILE_SIZE_P)
-			put_pixel_in_img(player_img, x * MAP_SC, MAP_SC * y++, COLOR_PLAYER);
+		while (y < g_tile_p)
+			put_pixel_in_img(player_img, x * MAP_SC, MAP_SC * y++, PLAYER_COLOR);
 		x++;
 	}
 }
@@ -32,7 +32,7 @@ void		display_player()
 	int x;
 	int y;
 
-	x = player.x - (TILE_SIZE_P / 2);
-	y = player.y - (TILE_SIZE_P / 2);
+	x = player.x - (g_tile_p / 2);
+	y = player.y - (g_tile_p / 2);
 	mlx_put_image_to_window(mlx.ptr, mlx.win, player_img.img, x * MAP_SC, y * MAP_SC);
 }

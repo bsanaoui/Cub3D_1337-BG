@@ -20,27 +20,26 @@
 void	InitGame()
 {
 	mlx.ptr = mlx_init();
-	ROTATION_SPEED = (2.0 * (M_PI / 180));
-	MOVE_SPEED = 4.0;
-	newline = 0;
+	g_rot_speed = (2.0 * (M_PI / 180));
+	g_move_speed = 4.0;
+	g_newline = 0;
 	reset_elem_conf();
 	import_data();
-	WALL_COLOR = 0xffffff;
 	player.turnDirection = 0;
 	player.walkDirection = 0;
 	player.fov = 60 * M_PI / 180;
-	wall_strip_width = 1;
-	count_sprite = 0;
-	n_rays = mlx.WIN_W / wall_strip_width;
-	rays = (T_RAYS *)(malloc(n_rays * sizeof(T_RAYS)));
-	sprites = (T_SPRITE *)(malloc(n_sp * sizeof(T_SPRITE)));
+	g_wall_strip_w = 1;
+	g_index_sp = 0;
+	g_nb_ray = mlx.WIN_W / g_wall_strip_w;
+	rays = (T_RAYS *)(malloc(g_nb_ray * sizeof(T_RAYS)));
+	sprites = (T_SPRITE *)(malloc(g_n_sp * sizeof(T_SPRITE)));
 	mlx.win = mlx_new_window(mlx.ptr, mlx.WIN_W , mlx.WIN_H, "cub3D");
 }
 
 void	render()
 {
 	map_img.img = mlx_new_image(mlx.ptr, map_img.w = mlx.WIN_W * MAP_SC, map_img.h = mlx.WIN_H * MAP_SC); //image of maps
-	player_img.img = mlx_new_image(mlx.ptr, player_img.w = TILE_SIZE_P * MAP_SC, player_img.h = TILE_SIZE_P * MAP_SC); // image of player
+	player_img.img = mlx_new_image(mlx.ptr, player_img.w = g_tile_p * MAP_SC, player_img.h = g_tile_p * MAP_SC); // image of player
 	project_3d.img = mlx_new_image(mlx.ptr, project_3d.w = mlx.WIN_W , project_3d.h = mlx.WIN_H);
 	create_player2d();//character
 	ray();

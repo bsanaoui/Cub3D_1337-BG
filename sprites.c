@@ -20,10 +20,10 @@ static void    sort_sprites()
     T_SPRITE tmp;
 
     i = 0;
-    while (i < (count_sprite - 1))
+    while (i < (g_index_sp - 1))
     {
         j = 0;
-        while (j < (count_sprite - i - 1))
+        while (j < (g_index_sp - i - 1))
         {
             if (sprites[j].distance < sprites[j + 1].distance)
             {
@@ -42,7 +42,7 @@ int             in_array_sprites(int p_x, int p_y)
     int i;
 
     i = 0;
-    while (i < count_sprite)
+    while (i < g_index_sp)
     {
         if (sprites[i].index_x == p_x && sprites[i].index_y == p_y)
         {
@@ -68,7 +68,7 @@ void     get_ray_hit_sp(float s_x, float s_y, int i_sp)
         alpha -= M_PI * 2;
     else if (alpha < -M_PI)
         alpha += M_PI * 2;
-    sprites[i_sp].num_ray = (n_rays / player.fov) * alpha;
+    sprites[i_sp].num_ray = (g_nb_ray / player.fov) * alpha;
 }
 
 void	create_strip_sprite(float tab[], int num_sp) // tab[] = {float x, float y, float width, float height}
@@ -85,7 +85,7 @@ void	create_strip_sprite(float tab[], int num_sp) // tab[] = {float x, float y, 
     text_color = 0;
 	while(i < tab[2])
 	{
-        if ((tab[0] + i) < n_rays - 1 && (tab[0] + i) >= 0)
+        if ((tab[0] + i) < g_nb_ray - 1 && (tab[0] + i) >= 0)
             if (rays[(int)tab[0] + i].distance < sprites[num_sp].distance)
                 {
                     i++;
@@ -113,11 +113,11 @@ void	render_sprites()
 
     i = 0;
     sort_sprites();
-    while (i < count_sprite)
+    while (i < g_index_sp)
     {
         distanceProjectionPlane = (mlx.WIN_W / 2) / tan(player.fov / 2);
         correctspriteDistance = sprites[i].distance  * cos(sprites[i].angle - player.Angle);
-	    spriteHeight = (TILE_SIZE / correctspriteDistance) * distanceProjectionPlane;
+	    spriteHeight = (g_tile / correctspriteDistance) * distanceProjectionPlane;
         if (spriteHeight <= (mlx.WIN_W * 1.5))
             create_strip_sprite((float[]){sprites[i].num_ray - (spriteHeight / 2), (mlx.WIN_H / 2) - (spriteHeight / 2), spriteHeight, spriteHeight}, i);
         i++;
@@ -128,14 +128,14 @@ void    get_sprite_data(T_SPRITE_CAST tmp_sp)
 {
    if (!in_array_sprites(tmp_sp.index_x, tmp_sp.index_y))
    {
-        sprites[count_sprite].x = tmp_sp.hit_x;
-        sprites[count_sprite].y = tmp_sp.hit_y;
-        sprites[count_sprite].index_x = tmp_sp.index_x;
-        sprites[count_sprite].index_y = tmp_sp.index_y;
-        sprites[count_sprite].distance = tmp_sp.distance;
-        get_ray_hit_sp(sprites[count_sprite].x, sprites[count_sprite].y, count_sprite);
-        sprites[count_sprite].angle = normalizeAngle(player.Angle - player.fov / 2) + (sprites[count_sprite].num_ray * (player.fov / n_rays));
-        count_sprite++;
+        sprites[g_index_sp].x = tmp_sp.hit_x;
+        sprites[g_index_sp].y = tmp_sp.hit_y;
+        sprites[g_index_sp].index_x = tmp_sp.index_x;
+        sprites[g_index_sp].index_y = tmp_sp.index_y;
+        sprites[g_index_sp].distance = tmp_sp.distance;
+        get_ray_hit_sp(sprites[g_index_sp].x, sprites[g_index_sp].y, g_index_sp);
+        sprites[g_index_sp].angle = normalizeAngle(player.Angle - player.fov / 2) + (sprites[g_index_sp].num_ray * (player.fov / g_nb_ray));
+        g_index_sp++;
    }
 }
 
@@ -146,6 +146,6 @@ void    clear_sprites()
          free(sprites);
          sprites = NULL;
     }
-    count_sprite = 0;
-    sprites = (T_SPRITE *)(malloc(n_sp * sizeof(T_SPRITE)));
+    g_index_sp = 0;
+    sprites = (T_SPRITE *)(malloc(g_n_sp * sizeof(T_SPRITE)));
 }

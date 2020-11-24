@@ -74,10 +74,10 @@ void    fill_map()
 
     if (ft_strlen(m.ptr) < 4)
         ft_perror("No Map!!|n");
-    TILE_SIZE = ((mlx.WIN_H / m.h) < (mlx.WIN_W / m.w)) ? (mlx.WIN_H / m.h) : (mlx.WIN_W / m.w) ;
-    if (TILE_SIZE == 0)
-        TILE_SIZE = 1;
-	TILE_SIZE_P = mlx.WIN_W / m.w / 2;
+    g_tile = ((mlx.WIN_H / m.h) < (mlx.WIN_W / m.w)) ? (mlx.WIN_H / m.h) : (mlx.WIN_W / m.w) ;
+    if (g_tile == 0)
+        g_tile = 1;
+	g_tile_p = mlx.WIN_W / m.w / 2;
 	line = ft_split(m.ptr, '\n');
     m.map = malloc(sizeof(char *) * m.h);
 	i = 0;
@@ -93,7 +93,7 @@ void    fill_map()
             else if (is_valid_in_map(line[i][j]))
              	m.map[i][j] = line[i][j];
             if (m.map[i][j] == '2')
-                n_sp++;
+                g_n_sp++;
             else if (is_player(m.map[i][j]))
 			    get_position_player(m.map[i][j], i, j);
 			j++;

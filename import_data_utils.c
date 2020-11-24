@@ -76,8 +76,8 @@ void        get_position_player(char c, int pos_x, int pos_y)
 {
     is_set.player = (is_set.player == 0) ? 1 : ft_perror("Duplicate PLayer; Set One Position !");
     oriontation_player(c);
-    player.x = (pos_y * TILE_SIZE) + (TILE_SIZE / 2);
-    player.y = (pos_x * TILE_SIZE) + (TILE_SIZE / 2);
+    player.x = (pos_y * g_tile) + (g_tile / 2);
+    player.y = (pos_x * g_tile) + (g_tile / 2);
 }
 
 int         is_all_elem()

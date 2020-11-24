@@ -15,12 +15,12 @@
 static T_CAST	calculate_steps(T_CAST cast, T_RAY ray)
 {
 	/* **************** Find x closet vertical grid intersection *************** */
-	cast.xinterept = floor(player.x / TILE_SIZE) * TILE_SIZE;
-	cast.xinterept += (ray.isRayFacingRight ? TILE_SIZE : 0);
+	cast.xinterept = floor(player.x / g_tile) * g_tile;
+	cast.xinterept += (ray.isRayFacingRight ? g_tile : 0);
 	/* **************** Find x closet vertical grid intersection *************** */
 	cast.yinterept = player.y + (((-cast.xinterept + player.x) * tan(-ray.rayAngle)));
 	/* **************** calculate the increment xstep and ystep ****************** */
-	cast.xstep = TILE_SIZE;
+	cast.xstep = g_tile;
 	cast.xstep *= ray.isRayFacingLeft ? -1 : 1;
 	cast.ystep = cast.xstep * tan(-ray.rayAngle);
 
@@ -51,10 +51,10 @@ static T_CAST	increment_steps(T_CAST cast)
 		{
 			cast.i_sp++;
 			cast.sprite[cast.i_sp].hit_vert = 1;
-			cast.sprite[cast.i_sp].index_x = (cast.nextTouchX - cast.minusX)  / TILE_SIZE ; 
-			cast.sprite[cast.i_sp].index_y = cast.nextTouchY / TILE_SIZE;
-			cast.sprite[cast.i_sp].hit_x = (cast.sprite[cast.i_sp].index_x * TILE_SIZE) + (TILE_SIZE / 2);
-			cast.sprite[cast.i_sp].hit_y = (cast.sprite[cast.i_sp].index_y * TILE_SIZE) + (TILE_SIZE / 2);
+			cast.sprite[cast.i_sp].index_x = (cast.nextTouchX - cast.minusX)  / g_tile ; 
+			cast.sprite[cast.i_sp].index_y = cast.nextTouchY / g_tile;
+			cast.sprite[cast.i_sp].hit_x = (cast.sprite[cast.i_sp].index_x * g_tile) + (g_tile / 2);
+			cast.sprite[cast.i_sp].hit_y = (cast.sprite[cast.i_sp].index_y * g_tile) + (g_tile / 2);
 			//distance to center
 		}
 		cast.nextTouchX += cast.xstep;
@@ -77,7 +77,7 @@ T_CAST	vertical_intersections(T_RAY ray)
 	int		i;
 
 	//sprite
-	cast.sprite = (T_SPRITE_CAST *)(malloc(n_sp * 2 * sizeof(T_SPRITE_CAST *)));
+	cast.sprite = (T_SPRITE_CAST *)(malloc(g_n_sp * 2 * sizeof(T_SPRITE_CAST *)));
 	cast.i_sp = -1;
 
 	cast.foundVertWallHit = 0;

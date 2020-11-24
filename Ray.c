@@ -37,19 +37,19 @@ void		ray()
 	rays[0].rayAngle = normalizeAngle(player.Angle - (player.fov / 2));
 	cast_ray(direction_ray(rays[0].rayAngle, 0), 0);
 	i = 1;
-	while (i < n_rays)
+	while (i < g_nb_ray)
 	{
-		rays[i].rayAngle = normalizeAngle(rays[i - 1].rayAngle + (player.fov / n_rays));
+		rays[i].rayAngle = normalizeAngle(rays[i - 1].rayAngle + (player.fov / g_nb_ray));
 		cast_ray(direction_ray(rays[i].rayAngle, i), i);
 		i++;
 	}
 
 	// **** Affichage sprites **** //
 	// int  k = 0;
-	// if (count_sprite == 0)
+	// if (g_index_sp == 0)
 	// 	printf("No Sprites\n");
-	// printf("******** Number of sprtites : << %d >>********\n",count_sprite);
-	// while (k < count_sprite)
+	// printf("******** Number of sprtites : << %d >>********\n",g_index_sp);
+	// while (k < g_index_sp)
     // {
     //     printf("sprtie << %d >>  {%d, %d} || Num Array = %d || angle_sp = %f\n",k + 1, sprites[k].index_x,sprites[k].index_y, sprites[k].num_ray, sprites[k].angle * 180 / M_PI);
 	// 	k++;
@@ -111,7 +111,7 @@ void	create_rays()
 	int i;
 
 	i = 0;
-	while (i < n_rays)
+	while (i < g_nb_ray)
 	{
 		line(player.x * MAP_SC, player.y * MAP_SC, rays[i].wallHit.X * MAP_SC, rays[i].wallHit.Y * MAP_SC);
 		i++;

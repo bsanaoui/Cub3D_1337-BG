@@ -18,11 +18,11 @@ void	create_grid(int i, int j)
 	int y;
 
 	x = i;
-	while (x < TILE_SIZE + i)
+	while (x < g_tile + i)
 	{
 		y = j;
-		while (y < TILE_SIZE + j)
-			put_pixel_in_img(map_img, MAP_SC * x,MAP_SC * y++, FLOOR_COLOR);
+		while (y < g_tile + j)
+			put_pixel_in_img(map_img, MAP_SC * x,MAP_SC * y++, g_floor_color);
 		x++;
 	}
 }
@@ -33,10 +33,10 @@ static	void	create_2d_sprite(int i, int j)
 	int y;
 
 	x = i;
-	while (x < (TILE_SIZE - 2 + i))
+	while (x < (g_tile - 2 + i))
 	{
 		y = j;
-		while (y < (TILE_SIZE - 2 + j))
+		while (y < (g_tile - 2 + j))
 			put_pixel_in_img(map_img, MAP_SC * x,MAP_SC * y++, SPRITE_COLOR);
 		x++;
 	}
@@ -59,10 +59,10 @@ void	create_2d_map(void)
 				create_grid(i, j);
 			else if (m.map[MAP_HT][MAP_WD] == '2')
 				create_2d_sprite(i, j);
-			j = j + TILE_SIZE;
+			j = j + g_tile;
 			MAP_HT++;
 		}
-		i = i + TILE_SIZE;
+		i = i + g_tile;
 		MAP_WD++;
 	}
 }
