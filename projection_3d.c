@@ -14,31 +14,31 @@
 
 static float		get_offset_x(int ray_n)
 {
-	if (rays[ray_n].was_hit_vertical)
-		return ((int)rays[ray_n].wallHit.Y % (int)g_tile);
-	return ((int)rays[ray_n].wallHit.X % (int)g_tile);
+	if (g_rays[ray_n].was_hit_vertical)
+		return ((int)g_rays[ray_n].wall_hit.y % (int)g_tile);
+	return ((int)g_rays[ray_n].wall_hit.x % (int)g_tile);
 }
 
-void			render3DProjectedWalls()
+void			render3d()
 {
 	int		i;
 	float	wallStripHeight;
 	float	correctWallDistance;
 	float	distanceProjectionPlane;
 
-	project_3d.img = mlx_new_image(mlx.ptr, mlx.WIN_W , mlx.WIN_H); 
-	distanceProjectionPlane = (mlx.WIN_W / 2) / tan(player.fov / 2); 
+	g_img_3d.img = mlx_new_image(g_cub.ptr, g_cub.w , g_cub.h); 
+	distanceProjectionPlane = (g_cub.w / 2) / tan(g_player.fov / 2); 
 	i = 0;
 	while(i < g_nb_ray)
 	{
-		correctWallDistance = rays[i].distance * cos(rays[i].rayAngle - player.Angle);
+		correctWallDistance = g_rays[i].dist * cos(g_rays[i].angle - g_player.angle);
 		wallStripHeight = (g_tile / correctWallDistance) * distanceProjectionPlane;
-		create_strip_wall((float[]){i * g_wall_strip_w, (mlx.WIN_H / 2) - (wallStripHeight / 2), g_wall_strip_w, wallStripHeight}, get_offset_x(i), i);
-		create_strip_height((float[]){i * g_wall_strip_w, 0, g_wall_strip_w, (mlx.WIN_H - wallStripHeight) / 2 }, g_ceil_color);
-		create_strip_height((float[]){i * g_wall_strip_w, wallStripHeight  + ((mlx.WIN_H - wallStripHeight) / 2), g_wall_strip_w, (mlx.WIN_H - wallStripHeight) / 2}, g_floor_color);
+		create_strip_wall((float[]){i * g_wall_strip_w, (g_cub.h / 2) - (wallStripHeight / 2), g_wall_strip_w, wallStripHeight}, get_offset_x(i), i);
+		create_strip_height((float[]){i * g_wall_strip_w, 0, g_wall_strip_w, (g_cub.h - wallStripHeight) / 2 }, g_ceil_color);
+		create_strip_height((float[]){i * g_wall_strip_w, wallStripHeight  + ((g_cub.h - wallStripHeight) / 2), g_wall_strip_w, (g_cub.h - wallStripHeight) / 2}, g_floor_color);
 		i++;
 	}
 	render_sprites(); /////////// SPRITE RENDRINNG
-	mlx_put_image_to_window(mlx.ptr, mlx.win, project_3d.img, 0, 0);
-	mlx_destroy_image(mlx.ptr, project_3d.img);
+	mlx_put_image_to_window(g_cub.ptr, g_cub.win, g_img_3d.img, 0, 0);
+	mlx_destroy_image(g_cub.ptr, g_img_3d.img);
 }

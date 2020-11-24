@@ -34,7 +34,7 @@ static void		lineLow(int x0, int y0, int x1, int y1)
 	x = x0;
 	while (x <= x1)
 	{
-		put_pixel_in_img(map_img, x, y, RAY_COLOR);
+		put_pixel_in_img(g_map_img, x, y, RAY_COLOR);
 		if (D > 0)
 		{
 			y = y + yi;
@@ -67,7 +67,7 @@ static void		lineHigh(int x0, int y0, int x1, int y1)
 	y = y0;
 	while (y <= y1)
 	{
-		put_pixel_in_img(map_img, x, y, RAY_COLOR);
+		put_pixel_in_img(g_map_img, x, y, RAY_COLOR);
 		if (D > 0)
 		{
 			x = x + xi;

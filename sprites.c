@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprites.c                                :+:      :+:    :+:   */
+/*   g_sprites.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsanaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,7 +17,7 @@ static void    sort_sprites()
 {
     int i;
     int j;
-    T_SPRITE tmp;
+    t_sprite tmp;
 
     i = 0;
     while (i < (g_index_sp - 1))
@@ -25,11 +25,11 @@ static void    sort_sprites()
         j = 0;
         while (j < (g_index_sp - i - 1))
         {
-            if (sprites[j].distance < sprites[j + 1].distance)
+            if (g_sprites[j].dist < g_sprites[j + 1].dist)
             {
-                tmp = sprites[j];
-                sprites[j] = sprites[j + 1];
-                sprites[j + 1] = tmp;
+                tmp = g_sprites[j];
+                g_sprites[j] = g_sprites[j + 1];
+                g_sprites[j + 1] = tmp;
             }
             j++;
         }
@@ -44,7 +44,7 @@ int             in_array_sprites(int p_x, int p_y)
     i = 0;
     while (i < g_index_sp)
     {
-        if (sprites[i].index_x == p_x && sprites[i].index_y == p_y)
+        if (g_sprites[i].index_x == p_x && g_sprites[i].index_y == p_y)
         {
             return (1);
         }
@@ -59,16 +59,16 @@ void     get_ray_hit_sp(float s_x, float s_y, int i_sp)
     t_vector v_ray1;
     t_vector v_sp;
 
-    v_ray1.x = rays[0].wallHit.X - player.x;
-    v_ray1.y = rays[0].wallHit.Y - player.y;
-    v_sp.x = s_x - player.x;
-    v_sp.y = s_y - player.y;
+    v_ray1.x = g_rays[0].wall_hit.x - g_player.x;
+    v_ray1.y = g_rays[0].wall_hit.y - g_player.y;
+    v_sp.x = s_x - g_player.x;
+    v_sp.y = s_y - g_player.y;
     alpha = -atan2(v_ray1.y, v_ray1.x) + atan2(v_sp.y, v_sp.x);
     if (alpha > M_PI)
         alpha -= M_PI * 2;
     else if (alpha < -M_PI)
         alpha += M_PI * 2;
-    sprites[i_sp].num_ray = (g_nb_ray / player.fov) * alpha;
+    g_sprites[i_sp].num_ray = (g_nb_ray / g_player.fov) * alpha;
 }
 
 void	create_strip_sprite(float tab[], int num_sp) // tab[] = {float x, float y, float width, float height}
@@ -80,13 +80,13 @@ void	create_strip_sprite(float tab[], int num_sp) // tab[] = {float x, float y, 
 	double text_color;
 
 	i = 0;
-    scale_x = texture_sp.w / tab[2];
-    scale_y= texture_sp.h / tab[3];
+    scale_x = g_text_sp.w / tab[2];
+    scale_y= g_text_sp.h / tab[3];
     text_color = 0;
 	while(i < tab[2])
 	{
         if ((tab[0] + i) < g_nb_ray - 1 && (tab[0] + i) >= 0)
-            if (rays[(int)tab[0] + i].distance < sprites[num_sp].distance)
+            if (g_rays[(int)tab[0] + i].dist < g_sprites[num_sp].dist)
                 {
                     i++;
                     continue ;
@@ -94,9 +94,9 @@ void	create_strip_sprite(float tab[], int num_sp) // tab[] = {float x, float y, 
 		j = 0;
 		while(j < tab[3])
 		{
-			text_color = texture_sp.data_tex[(int)(scale_x * i) + (((int)((float)(scale_y * j)) * texture_sp.size_line_texture_sp / 4))];
+			text_color = g_text_sp.data[(int)(scale_x * i) + (((int)((float)(scale_y * j)) * g_text_sp.size_line / 4))];
             if (text_color != 0x980088)
-				 put_pixel_in_img(project_3d, tab[0] + i, tab[1] + j, text_color);
+				 put_pixel_in_img(g_img_3d, tab[0] + i, tab[1] + j, text_color);
 			j++;
 		}
 		i++;
@@ -115,37 +115,37 @@ void	render_sprites()
     sort_sprites();
     while (i < g_index_sp)
     {
-        distanceProjectionPlane = (mlx.WIN_W / 2) / tan(player.fov / 2);
-        correctspriteDistance = sprites[i].distance  * cos(sprites[i].angle - player.Angle);
+        distanceProjectionPlane = (g_cub.w / 2) / tan(g_player.fov / 2);
+        correctspriteDistance = g_sprites[i].dist  * cos(g_sprites[i].angle - g_player.angle);
 	    spriteHeight = (g_tile / correctspriteDistance) * distanceProjectionPlane;
-        if (spriteHeight <= (mlx.WIN_W * 1.5))
-            create_strip_sprite((float[]){sprites[i].num_ray - (spriteHeight / 2), (mlx.WIN_H / 2) - (spriteHeight / 2), spriteHeight, spriteHeight}, i);
+        if (spriteHeight <= (g_cub.w * 1.5))
+            create_strip_sprite((float[]){g_sprites[i].num_ray - (spriteHeight / 2), (g_cub.h / 2) - (spriteHeight / 2), spriteHeight, spriteHeight}, i);
         i++;
     }
 }
 
-void    get_sprite_data(T_SPRITE_CAST tmp_sp)
+void    get_sprite_data(t_sp_cast tmp_sp)
 {
    if (!in_array_sprites(tmp_sp.index_x, tmp_sp.index_y))
    {
-        sprites[g_index_sp].x = tmp_sp.hit_x;
-        sprites[g_index_sp].y = tmp_sp.hit_y;
-        sprites[g_index_sp].index_x = tmp_sp.index_x;
-        sprites[g_index_sp].index_y = tmp_sp.index_y;
-        sprites[g_index_sp].distance = tmp_sp.distance;
-        get_ray_hit_sp(sprites[g_index_sp].x, sprites[g_index_sp].y, g_index_sp);
-        sprites[g_index_sp].angle = normalizeAngle(player.Angle - player.fov / 2) + (sprites[g_index_sp].num_ray * (player.fov / g_nb_ray));
+        g_sprites[g_index_sp].x = tmp_sp.hit_x;
+        g_sprites[g_index_sp].y = tmp_sp.hit_y;
+        g_sprites[g_index_sp].index_x = tmp_sp.index_x;
+        g_sprites[g_index_sp].index_y = tmp_sp.index_y;
+        g_sprites[g_index_sp].dist = tmp_sp.dist;
+        get_ray_hit_sp(g_sprites[g_index_sp].x, g_sprites[g_index_sp].y, g_index_sp);
+        g_sprites[g_index_sp].angle = normalize_angle(g_player.angle - g_player.fov / 2) + (g_sprites[g_index_sp].num_ray * (g_player.fov / g_nb_ray));
         g_index_sp++;
    }
 }
 
 void    clear_sprites()
 {
-    if (sprites)
+    if (g_sprites)
     {
-         free(sprites);
-         sprites = NULL;
+         free(g_sprites);
+         g_sprites = NULL;
     }
     g_index_sp = 0;
-    sprites = (T_SPRITE *)(malloc(g_n_sp * sizeof(T_SPRITE)));
+    g_sprites = (t_sprite *)(malloc(g_n_sp * sizeof(t_sprite)));
 }

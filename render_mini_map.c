@@ -14,10 +14,10 @@
 
 void	render_mini_map()
 {
-	map_img.img = mlx_new_image(mlx.ptr, mlx.WIN_W * MAP_SC, mlx.WIN_H * MAP_SC);
+	g_map_img.img = mlx_new_image(g_cub.ptr, g_cub.w * MAP_SC, g_cub.h * MAP_SC);
 	create_2d_map();//map
-	create_rays(); //rays
-	mlx_put_image_to_window(mlx.ptr, mlx.win, map_img.img, 0, 0); //rays and map
+	create_rays(); //g_rays
+	mlx_put_image_to_window(g_cub.ptr, g_cub.win, g_map_img.img, 0, 0); //g_rays and map
 	display_player();
-	mlx_destroy_image(mlx.ptr, map_img.img);
+	mlx_destroy_image(g_cub.ptr, g_map_img.img);
 }

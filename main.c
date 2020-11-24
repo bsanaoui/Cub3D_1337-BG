@@ -19,38 +19,38 @@
 
 void	InitGame()
 {
-	mlx.ptr = mlx_init();
-	g_rot_speed = (2.0 * (M_PI / 180));
-	g_move_speed = 4.0;
+	g_cub.ptr = mlx_init();
+	g_player.rot_speed = (1.5 * (M_PI / 180));
+	g_player.move_speed = 3.2;
 	g_newline = 0;
 	reset_elem_conf();
 	import_data();
-	player.turnDirection = 0;
-	player.walkDirection = 0;
-	player.fov = 60 * M_PI / 180;
+	g_player.turn_dir = 0;
+	g_player.walk_dir = 0;
+	g_player.fov = 60 * M_PI / 180;
 	g_wall_strip_w = 1;
 	g_index_sp = 0;
-	g_nb_ray = mlx.WIN_W / g_wall_strip_w;
-	rays = (T_RAYS *)(malloc(g_nb_ray * sizeof(T_RAYS)));
-	sprites = (T_SPRITE *)(malloc(g_n_sp * sizeof(T_SPRITE)));
-	mlx.win = mlx_new_window(mlx.ptr, mlx.WIN_W , mlx.WIN_H, "cub3D");
+	g_nb_ray = g_cub.w / g_wall_strip_w;
+	g_rays = (t_rays *)(malloc(g_nb_ray * sizeof(t_rays)));
+	g_sprites = (t_sprite *)(malloc(g_n_sp * sizeof(t_sprite)));
+	g_cub.win = mlx_new_window(g_cub.ptr, g_cub.w , g_cub.h, "cub3D");
 }
 
 void	render()
 {
-	map_img.img = mlx_new_image(mlx.ptr, map_img.w = mlx.WIN_W * MAP_SC, map_img.h = mlx.WIN_H * MAP_SC); //image of maps
-	player_img.img = mlx_new_image(mlx.ptr, player_img.w = g_tile_p * MAP_SC, player_img.h = g_tile_p * MAP_SC); // image of player
-	project_3d.img = mlx_new_image(mlx.ptr, project_3d.w = mlx.WIN_W , project_3d.h = mlx.WIN_H);
+	g_map_img.img = mlx_new_image(g_cub.ptr, g_map_img.w = g_cub.w * MAP_SC, g_map_img.h = g_cub.h * MAP_SC); //image of maps
+	g_pl_img.img = mlx_new_image(g_cub.ptr, g_pl_img.w = g_tile_p * MAP_SC, g_pl_img.h = g_tile_p * MAP_SC); // image of g_player
+	g_img_3d.img = mlx_new_image(g_cub.ptr, g_img_3d.w = g_cub.w , g_img_3d.h = g_cub.h);
 	create_player2d();//character
 	ray();
-	render3DProjectedWalls();
+	render3d();
 	//ft_screenshoot();
-	//render_mini_map();
-	mlx_hook(mlx.win,2,1L<<0, key_press, NULL);
-	mlx_hook(mlx.win,3,1L<<1, key_release, NULL);
-	mlx_hook(mlx.win,17, 0L, finalize, NULL);
-	mlx_loop_hook(mlx.ptr, update, NULL);
-	mlx_loop(mlx.ptr);
+	render_mini_map();
+	mlx_hook(g_cub.win,2,1L<<0, key_press, NULL);
+	mlx_hook(g_cub.win,3,1L<<1, key_release, NULL);
+	mlx_hook(g_cub.win,17, 0L, finalize, NULL);
+	mlx_loop_hook(g_cub.ptr, update, NULL);
+	mlx_loop(g_cub.ptr);
 }
 
 int main ()

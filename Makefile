@@ -71,9 +71,3 @@ main:
 	@$(CC) -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -framework OpenGL -framework Appkit Cub3D.a get_next_line.a libft.a
 	@./a.out
 	@make fclean
-
-test:
-	@make re
-	@cc -I /usr/local/include test.c -L /usr/local/lib/ -lmlx -framework OpenGL -framework Appkit
-	@./a.out
-	@make fclean

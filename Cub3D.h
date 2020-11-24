@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef cub3d_h
+#ifndef CUB3D_H
 # define CUB3D_H
 # include <unistd.h>
 # include <stdlib.h>
@@ -26,223 +26,211 @@
 # define MAP_COLOR 3093151
 # define SPRITE_COLOR 14557865
 
-float	g_rot_speed;
-float	g_move_speed;
-float	g_tile;
-float	g_tile_p;
-int 	g_floor_color;
-int 	g_ceil_color;
-int		g_nb_ray;
-int		g_wall_strip_w;
-int		g_index_sp;
-int		g_n_sp;
-int		g_newline;
+float			g_tile;
+float			g_tile_p;
+int				g_floor_color;
+int				g_ceil_color;
+int				g_nb_ray;
+int				g_wall_strip_w;
+int				g_index_sp;
+int				g_n_sp;
+int				g_newline;
 
 typedef struct	s_vector
 {
-	double	x;
-	double	y;
+	double		x;
+	double		y;
 }				t_vector;
 
-typedef struct 	s_map
+typedef struct	s_map
 {
-	char	*ptr;
-	char	**map;
-	int		w;
-	int		h;
-} 				t_map;
+	char		*ptr;
+	char		**map;
+	int			w;
+	int			h;
+}				t_map;
 
-typedef struct	img
+typedef struct	s_img
 {
-	void 	*img;
-	int		h;
-	int		w;
-	int		*data;
-} 				t_img;
+	void		*img;
+	int			h;
+	int			w;
+	int			*data;
+}				t_img;
 
-typedef struct mlx_var
+typedef struct	s_cub
 {
-	void 	*ptr;
-	void	*win;
-	int		WIN_H;
-	int		WIN_W;
-} T_MLX_VAR ;
+	void		*ptr;
+	void		*win;
+	int			h;
+	int			w;
+}				t_cub;
 
-typedef struct player
+typedef struct	s_player
 {
-	double 	x;
-	double 	y;
-	int		turnDirection;
-	int		walkDirection;
-	double	Angle;
-	float	rotationSpeed;
-	double 	fov;
-} T_PLAYER ;
+	double		x;
+	double		y;
+	int			turn_dir;
+	int			walk_dir;
+	double		angle;
+	float		rot_speed;
+	float		move_speed;
+	double		fov;
+}				t_player;
 
-typedef struct wallHit
+typedef struct	s_wall_hit
 {
-	double		X;
-	double		Y;
-} T_WALLHIT ;
+	double		x;
+	double		y;
+}				t_wall_hit;
 
-typedef struct rays
+typedef struct	s_rays
 {
-	double 		rayAngle;
-	double		distance;
+	double		angle;
+	double		dist;
 	int			was_hit_vertical;
-	T_WALLHIT 	wallHit;
-	int			isRayFacingDown;
-	int			isRayFacingUp;
-	int			isRayFacingRight;
-	int			isRayFacingLeft;
-} T_RAYS ;
+	t_wall_hit	wall_hit;
+	int			is_down;
+	int			is_up;
+	int			is_right;
+	int			is_left;
+}				t_rays;
 
-typedef	struct sprite_cast
+typedef	struct	s_sp_cast
 {
 	int			hit_horz;
 	int			hit_vert;
 	double		hit_x;
 	double		hit_y;
-	double		distance;
+	double		dist;
 	int			index_x;
 	int			index_y;
+}				t_sp_cast;
 
-} T_SPRITE_CAST;
-
-typedef struct cast
+typedef struct	s_cast
 {
-	double			xinterept;
-	double			yinterept;
-	double			xstep;
-	double			ystep;
-	double			nextTouchX;
-	double			nextTouchY;
-	double			wallHitX;
-	double			wallHitY;
-	double			distance;
-	int 			foundHorzWallHit;
-	int 			foundVertWallHit;
-	int				minusY;
-	int				minusX;
-	T_SPRITE_CAST	*sprite;
-	int				i_sp;
+	double		xinterept;
+	double		yinterept;
+	double		xstep;
+	double		ystep;
+	double		next_touch_x;
+	double		next_touch_y;
+	double		wall_hit_x;
+	double		wall_hit_y;
+	double		dist;
+	int			found_horz_wall;
+	int			found_vert_wall;
+	int			minus_y;
+	int			minus_x;
+	t_sp_cast	*sprite;
+	int			i_sp;
+}				t_cast;
 
-} T_CAST ;
-
-typedef struct ray
+typedef struct	s_ray
 {
-	double	rayAngle;
-	int		isRayFacingDown;
-	int		isRayFacingUp;
-	int		isRayFacingRight;
-	int		isRayFacingLeft;
-} T_RAY ;
+	double		angle;
+	int			is_down;
+	int			is_up;
+	int			is_right;
+	int			is_left;
+}				t_ray;
 
-typedef struct sprite
+typedef struct	s_sprite
 {
-	double	x;
-	double	y;
-	int		index_x;
-	int		index_y;
-	double	distance;
-	int		num_ray;
-	double	angle;
-} T_SPRITE;
+	double		x;
+	double		y;
+	int			index_x;
+	int			index_y;
+	double		dist;
+	int			num_ray;
+	double		angle;
+}				t_sprite;
 
-typedef struct texture_sp
+typedef struct	s_texture
 {
-	char	*path;
-	int		*data_tex;
-	int		w;
-	int		h;
-	int		size_line_texture_sp;
-} t_texture_sp;
+	char		*path;
+	int			*data;
+	void		*img;
+	int			w;
+	int			h;
+	int			size_line;
+}				t_texture;
 
-typedef struct texture
+typedef struct	s_is_set_el
 {
-	char	*path;
-	void	*img;
-	int		*data;
-	int		w;
-	int		h;
-	int		size_line;
-} t_texture;
+	int			resolu;
+	int			text_no;
+	int			text_so;
+	int			text_we;
+	int			text_ea;
+	int			sprite;
+	int			color_f;
+	int			color_c;
+	int			player;
+}				t_is_set_el;
 
-typedef struct is_set_el
-{
-	int	resolu;
-	int	text_no;
-	int	text_so;
-	int	text_we;
-	int	text_ea;
-	int	sprite;
-	int	color_f;
-	int	color_c;
-	int	player;
-} t_is_set_el;
+t_map			g_m;
+t_cub			g_cub;
+t_img			g_map_img;
+t_img			g_pl_img;
+t_img			g_img_3d;
+t_player		g_player;
+t_rays			*g_rays;
+t_sprite		*g_sprites;
+t_is_set_el		g_is_set;
+t_texture		g_text_sp;
+t_texture		g_text_no;
+t_texture		g_text_so;
+t_texture		g_text_we;
+t_texture		g_text_ea;
+int				g_keys[7];
 
-t_map				m;
-T_MLX_VAR			mlx;
-t_img				map_img;
-t_img				player_img;
-t_img				project_3d;
-T_PLAYER			player;
-T_RAYS				*rays;
-T_SPRITE			*sprites;
-t_texture_sp		texture_sp;
-t_is_set_el			is_set;
-t_texture			text_no;
-t_texture			text_so;
-t_texture			text_we;
-t_texture			text_ea;
-int					keys[7];
-
-void		ft_putchar(char c);
-void		ft_putnbr(int nb);
-int			ft_atoi(char *str, int *len);
-int			ft_isdigit(int c);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
-char		*ft_strdup(const char *s1);
-char		**ft_split(char const *s, char c);
-void		*ft_memcpy(void *dst, const void *src, size_t n);
-char		*ft_strtrim(char const *s1, char const *set);
-int			update();
-int			key_press(int key);
-int			key_release(int key);
-void		move_player(int key);
-void		create_2d_map(void);
-void		create_grid(int i, int j);
-void		create_player2d();
-void		display_player();
-void		line(int x0, int y0, int x1, int y1);
-void		put_pixel_in_img(t_img s_img, int x, int y, int color);
-void		ray();
-int			is_wall(int walkDirection, int kindMove);
-float		normalizeAngle(float angle);
-int			hasWallAt(int x, int y);
-void		cast_ray(T_RAY ray, int ray_count);
-T_CAST		horizontal_intersections(T_RAY ray);
-T_CAST		vertical_intersections(T_RAY ray);
-float		distance(float x1, float x2, float y1, float y2);
-void		render3DProjectedWalls();
-void		create_strip_height(float tab[], int color);
-void		create_strip_wall(float tab[], int offset_x, int n_ray);
-void		create_rays();
-void		render_mini_map();
-void		import_data();
-int			finalize(void *s);
-int     	is_player(char c);
-void    	get_position_player(char c, int pos_x, int pos_y);
-void        get_texture();
-void		render_sprites();
-void    	get_sprite_data(T_SPRITE_CAST tmp_sp);
-void    	clear_sprites();
-void	    clear_rays();
-void		import_map();
-void    	fill_map();
-int			ft_perror(const char *s);
-int    		is_all_elem();
-void		reset_elem_conf();
-int			is_line_empty(char *line);
+void			ft_putchar(char c);
+void			ft_putnbr(int nb);
+int				ft_atoi(char *str, int *len);
+int				ft_isdigit(int c);
+char			*ft_substr(char const *s, unsigned int start, size_t len);
+char			*ft_strdup(const char *s1);
+char			**ft_split(char const *s, char c);
+void			*ft_memcpy(void *dst, const void *src, size_t n);
+char			*ft_strtrim(char const *s1, char const *set);
+int				update();
+int				key_press(int key);
+int				key_release(int key);
+void			move_player(int key);
+void			create_2d_map(void);
+void			create_grid(int i, int j);
+void			create_player2d();
+void			display_player();
+void			line(int x0, int y0, int x1, int y1);
+void			put_pixel_in_img(t_img s_img, int x, int y, int color);
+void			ray();
+int				is_wall(int walk_dir, int kind_move);
+float			normalize_angle(float angle);
+int				has_wall(int x, int y);
+void			cast_ray(t_ray ray, int ray_count);
+t_cast			horizontal_intersections(t_ray ray);
+t_cast			vertical_intersections(t_ray ray);
+float			dist(float x1, float x2, float y1, float y2);
+void			render3d();
+void			create_strip_height(float tab[], int color);
+void			create_strip_wall(float tab[], int offset_x, int n_ray);
+void			create_rays();
+void			render_mini_map();
+void			import_data();
+int				finalize(void *s);
+int				is_player(char c);
+void			get_position_player(char c, int pos_x, int pos_y);
+void			get_texture();
+void			render_sprites();
+void			get_sprite_data(t_sp_cast tmp_sp);
+void			clear_sprites();
+void			clear_rays();
+void			import_map();
+void			fill_map();
+int				ft_perror(const char *s);
+int				is_all_elem();
+void			reset_elem_conf();
+int				is_line_empty(char *line);
 
 #endif

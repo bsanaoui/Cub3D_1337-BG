@@ -12,88 +12,88 @@
 
 #include "cub3d.h"
 
-static T_CAST	calculate_steps(T_CAST cast, T_RAY ray)
+static t_cast	calculate_steps(t_cast cast, t_ray ray)
 {
 	/* **************** Find y closet horizontal grid intersection *************** */
-	cast.yinterept = floor(player.y / g_tile) * g_tile;
-	cast.yinterept += (ray.isRayFacingDown ? g_tile : 0);
+	cast.yinterept = floor(g_player.y / g_tile) * g_tile;
+	cast.yinterept += (ray.is_down ? g_tile : 0);
 	/* **************** Find x closet horizontal grid intersection *************** */
-	cast.xinterept = player.x + (((-cast.yinterept + player.y) / tan(-ray.rayAngle)));
+	cast.xinterept = g_player.x + (((-cast.yinterept + g_player.y) / tan(-ray.angle)));
 	/* **************** calculate the increment xstep and ystep ****************** */
 	cast.ystep = g_tile;
-	cast.ystep *= ray.isRayFacingUp ? -1 : 1;
-	cast.xstep = cast.ystep / tan(-ray.rayAngle);
+	cast.ystep *= ray.is_up ? -1 : 1;
+	cast.xstep = cast.ystep / tan(-ray.angle);
 
-	cast.nextTouchX = cast.xinterept;
-	cast.nextTouchY = cast.yinterept;
-	if (ray.isRayFacingUp)
-		cast.minusY = 1;
+	cast.next_touch_x = cast.xinterept;
+	cast.next_touch_y = cast.yinterept;
+	if (ray.is_up)
+		cast.minus_y = 1;
 	else
-		cast.minusY = 0;
+		cast.minus_y = 0;
 	return (cast);
 }
 
-static T_CAST	increment_steps(T_CAST cast)
+static t_cast	increment_steps(t_cast cast)
 {
-	while (cast.nextTouchX >= 0 && cast.nextTouchX <= mlx.WIN_W
-		&& cast.nextTouchY >= 0 && cast.nextTouchY <= mlx.WIN_H)
+	while (cast.next_touch_x >= 0 && cast.next_touch_x <= g_cub.w
+		&& cast.next_touch_y >= 0 && cast.next_touch_y <= g_cub.h)
 	{
 		//sprite
-		if (hasWallAt(cast.nextTouchX, cast.nextTouchY - cast.minusY) == 1)
+		if (has_wall(cast.next_touch_x, cast.next_touch_y - cast.minus_y) == 1)
 		{
-			cast.foundHorzWallHit = 1;
-			cast.wallHitX = cast.nextTouchX;
-			cast.wallHitY = cast.nextTouchY;
+			cast.found_horz_wall = 1;
+			cast.wall_hit_x = cast.next_touch_x;
+			cast.wall_hit_y = cast.next_touch_y;
 			break ;
 		}
-		if (hasWallAt(cast.nextTouchX, cast.nextTouchY - cast.minusY) == 2)
+		if (has_wall(cast.next_touch_x, cast.next_touch_y - cast.minus_y) == 2)
 		{
 			cast.i_sp++;
 			cast.sprite[cast.i_sp].hit_horz = 1;
-			cast.sprite[cast.i_sp].index_x = cast.nextTouchX / g_tile;
-			cast.sprite[cast.i_sp].index_y = (cast.nextTouchY - cast.minusY) / g_tile;
+			cast.sprite[cast.i_sp].index_x = cast.next_touch_x / g_tile;
+			cast.sprite[cast.i_sp].index_y = (cast.next_touch_y - cast.minus_y) / g_tile;
 			cast.sprite[cast.i_sp].hit_x = (cast.sprite[cast.i_sp].index_x * g_tile) + (g_tile / 2);
 			cast.sprite[cast.i_sp].hit_y = (cast.sprite[cast.i_sp].index_y * g_tile) + (g_tile / 2);
-			//distance to center
+			//dist to center
 		}
-		cast.nextTouchX -= cast.xstep;
-		cast.nextTouchY += cast.ystep;
+		cast.next_touch_x -= cast.xstep;
+		cast.next_touch_y += cast.ystep;
 	}
-	if (!cast.foundHorzWallHit)
+	if (!cast.found_horz_wall)
 	{
-		cast.wallHitX = player.x;
-		cast.wallHitY = player.y;
+		cast.wall_hit_x = g_player.x;
+		cast.wall_hit_y = g_player.y;
 	}
 	return (cast);
 }
 
-T_CAST	horizontal_intersections(T_RAY ray)
+t_cast	horizontal_intersections(t_ray ray)
 {
 	/* ************************************************************************** */
 	/*                         HORIZONTAL INTERSECTION                            */
 	/* ************************************************************************** */
-	T_CAST 	cast;
+	t_cast 	cast;
 	int		i;
 
 	//sprite
-	cast.sprite = (T_SPRITE_CAST *)(malloc(g_n_sp * 2 * sizeof(T_SPRITE_CAST *)));
+	cast.sprite = (t_sp_cast *)(malloc(g_n_sp * 2 * sizeof(t_sp_cast *)));
 	cast.i_sp = -1;
-	cast.foundHorzWallHit = 0;
+	cast.found_horz_wall = 0;
 	i = 0;
 	// /* **************** calculate the increment xstep and ystep ****************** */
 	cast = calculate_steps(cast, ray);
 	//Increment by xstep and ystep until we find a wall;
 	cast = increment_steps(cast);
-	/* ******************   Calculate distance **************************** */
-	cast.distance = (cast.foundHorzWallHit) 
-	? distance(player.x, player.y, cast.wallHitX, cast.wallHitY)
+	/* ******************   Calculate dist **************************** */
+	cast.dist = (cast.found_horz_wall) 
+	? dist(g_player.x, g_player.y, cast.wall_hit_x, cast.wall_hit_y)
 	: WINT_MAX;
 
 	// sprite
 	while (i < cast.i_sp + 1)
 	{
-		cast.sprite[i].distance = (cast.sprite[i].hit_horz)
-		? distance(player.x, player.y, cast.sprite[i].hit_x, cast.sprite[i].hit_y)
+		cast.sprite[i].dist = (cast.sprite[i].hit_horz)
+		? dist(g_player.x, g_player.y, cast.sprite[i].hit_x, cast.sprite[i].hit_y)
 		: WINT_MAX;
 		i++;
 	}
