@@ -85,11 +85,12 @@ void	create_strip_sprite(float tab[], int num_sp) // tab[] = {float x, float y, 
     text_color = 0;
 	while(i < tab[2])
 	{
-        if ((tab[0] + i) < n_rays && (tab[0] + i) > 0 && rays[(int)tab[0] + i].distance < sprites[num_sp].distance)
-        {
-            i++;
-            continue ;
-        }
+        if ((tab[0] + i) < n_rays - 1 && (tab[0] + i) >= 0)
+            if (rays[(int)tab[0] + i].distance < sprites[num_sp].distance)
+                {
+                    i++;
+                    continue ;
+                }
 		j = 0;
 		while(j < tab[3])
 		{
