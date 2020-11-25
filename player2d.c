@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void		create_player2d()
+void		create_player2d(void)
 {
 	int x;
 	int y;
@@ -27,12 +27,13 @@ void		create_player2d()
 	}
 }
 
-void		display_player()
+void		display_player(void)
 {
 	int x;
 	int y;
 
 	x = g_player.x - (g_tile_p / 2);
 	y = g_player.y - (g_tile_p / 2);
-	mlx_put_image_to_window(g_cub.ptr, g_cub.win, g_pl_img.img, x * MAP_SC, y * MAP_SC);
+	mlx_put_image_to_window(g_cub.ptr, g_cub.win, g_pl_img.img,
+		x * MAP_SC, y * MAP_SC);
 }

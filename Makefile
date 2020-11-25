@@ -35,7 +35,8 @@ SRC = 	libft/ft_atoi.c \
 		sprites.c \
 		check_map.c \
 		import_texture.c \
-		import_resol_color.c
+		import_resol_color.c \
+		move_player.c
 
 OBJ = 	ft_atoi.o \
 		key_event.o \
@@ -55,7 +56,8 @@ OBJ = 	ft_atoi.o \
 		sprites.o \
 		check_map.o \
 		import_texture.o \
-		import_resol_color.o
+		import_resol_color.o \
+		move_player.o
 
 all : $(NAME)
 
