@@ -12,46 +12,6 @@
 
 #include "cub3d.h"
 
-void        get_texture_wall()
-{
-    int bits_per_pixel;
-	int	endian;
-
-    bits_per_pixel = 0;
-    endian = 0;
-    if (!(g_text_no.img = mlx_xpm_file_to_image (g_cub.ptr, g_text_no.path, &g_text_no.w, &g_text_no.h)))
-        ft_perror("NO Texture Not valid !\n");
-    g_text_no.data = (int *)mlx_get_data_addr(g_text_no.img, &bits_per_pixel, &g_text_no.size_line, &endian);
-    if (!(g_text_so.img = mlx_xpm_file_to_image (g_cub.ptr, g_text_so.path, &g_text_so.w, &g_text_so.h)))
-        ft_perror("SO Texture Not valid !\n");
-    g_text_so.data = (int *)mlx_get_data_addr(g_text_so.img, &bits_per_pixel, &g_text_so.size_line, &endian);
-    if (!(g_text_ea.img = mlx_xpm_file_to_image (g_cub.ptr, g_text_ea.path, &g_text_ea.w, &g_text_ea.h)))
-        ft_perror("EA Texture Not valid !\n");
-    g_text_ea.data = (int *)mlx_get_data_addr(g_text_ea.img, &bits_per_pixel, &g_text_ea.size_line, &endian);
-    if (!(g_text_we.img = mlx_xpm_file_to_image (g_cub.ptr, g_text_we.path, &g_text_we.w, &g_text_we.h)))
-        ft_perror("WE Texture Not valid !\n");
-    g_text_we.data = (int *)mlx_get_data_addr(g_text_we.img, &bits_per_pixel, &g_text_we.size_line, &endian);
-}
-
-void        get_texture_sprite()
-{
-    int bits_per_pixel = 0;
-	int	endian = 0;
-	void *img_texture;
-
-    if (!(img_texture = mlx_xpm_file_to_image (g_cub.ptr, g_text_sp.path, &g_text_sp.w, &g_text_sp.h)))
-        ft_perror("Sprite Not valid !\n");
-	g_text_sp.data  = (int *)mlx_get_data_addr(img_texture, &bits_per_pixel, &g_text_sp.size_line, &endian);
-}
-
-void        get_texture()
-{
-    get_texture_wall();
-    get_texture_sprite();
-}
-
-
-
 int         is_player(char c)
 {
     if (c == 'N' || c == 'S' || c == 'E' || c == 'W')

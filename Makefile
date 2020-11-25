@@ -33,7 +33,8 @@ SRC = 	libft/ft_atoi.c \
 		import_data_utils.c \
 		import_map.c \
 		sprites.c \
-		check_map.c
+		check_map.c \
+		import_texture.c
 
 OBJ = 	ft_atoi.o \
 		key_event.o \
@@ -51,7 +52,8 @@ OBJ = 	ft_atoi.o \
 		import_data_utils.o \
 		import_map.o \
 		sprites.o \
-		check_map.o
+		check_map.o \
+		import_texture.o
 
 all : $(NAME)
 
@@ -70,6 +72,6 @@ re: fclean all
 
 main:
 	@make re
-	@$(CC) -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -framework OpenGL -framework Appkit Cub3D.a get_next_line.a libft.a
+	@$(CC) -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -framework OpenGL -framework Appkit get_next_line.a Cub3D.a libft.a
 	@./a.out
 	@make fclean

@@ -77,45 +77,6 @@ void	color_flo_cei(char *line)
 	free(ptr);
 }
 
-static	void	get_path_texture(char *line)
-{
-	char *ptr;
-
-	while (*line != 'S' && *line != 'N' && *line != 'E' && *line != 'W' && *line)
-		line++;
-	ptr = ft_strtrim(line + 2, " ");
-	if (*(line + 2) == ' ')
-	{
-		if ((*line == 'N' && *(line + 1) == 'O'))
-			g_text_no.path = ft_strdup(ptr);
-		else if ((*line== 'S' && *(line + 1) == 'O'))
-			g_text_so.path = ft_strdup(ptr);
-		else if ((*line == 'W' && *(line + 1) == 'E'))
-			g_text_we.path = ft_strdup(ptr);
-		else if ((*line == 'E' && *(line + 1) == 'A'))
-			g_text_ea.path = ft_strdup(ptr);
-	}
-	if (*line == 'S' && *(line + 1) == ' ')
-		g_text_sp.path = ft_strdup(ptr);
-	if (ptr)
-		free(ptr);
-}
-
-static	int		is_path_texture(char *line)
-{
-	if (*line == 'N' && *(line + 1) == 'O')
-		return((g_is_set.text_no = (g_is_set.text_no == 0) ? 1 : ft_perror("Duplicate NO Texture\n")));
-	else if (*line == 'S' && *(line + 1) == 'O')
-		return((g_is_set.text_so = (g_is_set.text_so == 0) ? 1 : ft_perror("Duplicate SO Texture !")));
-	else if (*line == 'W' && *(line + 1) == 'E')
-		return((g_is_set.text_we = (g_is_set.text_we == 0) ? 1 : ft_perror("Duplicate WE Texture\n")));
-	else if (*line == 'E' && *(line + 1) == 'A')
-		return((g_is_set.text_ea = (g_is_set.text_ea == 0) ? 1 : ft_perror("Duplicate EA Texture\n")));
-	else if (*line == 'S')
-		return((g_is_set.sprite = (g_is_set.sprite == 0) ? 1 : ft_perror("Duplicate Sprite\n")));
-	return (0);
-}
-
 void			import_data()
 {
 	int		fd;

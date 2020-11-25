@@ -185,10 +185,8 @@ t_texture		g_text_we;
 t_texture		g_text_ea;
 int				g_keys[7];
 
-void			ft_putchar(char c);
 void			ft_putnbr(int nb);
 int				ft_atoi(char *str, int *len);
-int				ft_isdigit(int c);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strdup(const char *s1);
 char			**ft_split(char const *s, char c);
@@ -233,5 +231,7 @@ void			import_map();
 int     		check_arr_space(int i, int j);
 void   			check_map();
 void			fill_map();
+void			get_path_texture(char *line);
+int				is_path_texture(char *line);
 
 #endif

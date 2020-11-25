@@ -6,13 +6,13 @@
 /*   By: bsanaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 19:54:30 by bsanaoui          #+#    #+#             */
-/*   Updated: 2020/11/24 18:01:46 by bsanaoui         ###   ########.fr       */
+/*   Updated: 2020/11/25 14:09:48 by bsanaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static	int	is_valid_in_map(char c)
+static int		is_valid_in_map(char c)
 {
 	if (c != '2' && c != '1' && c != '0' && c != '\t' &&
 			c != ' ' && !is_player(c))
@@ -20,9 +20,10 @@ static	int	is_valid_in_map(char c)
 	return (1);
 }
 
-void		import_map(char *line)
+void			import_map(char *line)
 {
 	char *tmp;
+
 	tmp = g_m.ptr;
 	g_m.ptr = ft_strjoin(g_m.ptr, line);
 	free(tmp);
@@ -31,18 +32,18 @@ void		import_map(char *line)
 	free(tmp);
 }
 
-static void	get_tile()
+static	void	get_tile(void)
 {
 	if (ft_strlen(g_m.ptr) < 4)
 		ft_perror("No Map!!|n");
 	g_tile = ((g_cub.h / g_m.h) < (g_cub.w / g_m.w)) ?
-			(g_cub.h / g_m.h) : (g_cub.w / g_m.w);
+		(g_cub.h / g_m.h) : (g_cub.w / g_m.w);
 	if (g_tile == 0)
 		g_tile = 1;
 	g_tile_p = g_cub.w / g_m.w / 2;
 }
 
-static void fill_column(int i, char *line)
+static	void	fill_column(int i, char *line)
 {
 	int j;
 	int len;
@@ -63,10 +64,10 @@ static void fill_column(int i, char *line)
 	g_m.map[i][j] = '\0';
 }
 
-void 		fill_map(void)
+void			fill_map(void)
 {
-	char **line;
-	int i;
+	char	**line;
+	int		i;
 
 	get_tile();
 	line = ft_split(g_m.ptr, '\n');
