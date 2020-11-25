@@ -226,11 +226,12 @@ void			render_sprites();
 void			get_sprite_data(t_sp_cast tmp_sp);
 void			clear_sprites();
 void			clear_rays();
-void			import_map();
-void			fill_map();
 int				ft_perror(const char *s);
 int				is_all_elem();
 void			reset_elem_conf();
-int				is_line_empty(char *line);
+void			import_map();
+int     		check_arr_space(int i, int j);
+void   			check_map();
+void			fill_map();
 
 #endif

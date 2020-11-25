@@ -38,10 +38,10 @@ void	InitGame()
 
 void	render()
 {
-	g_map_img.img = mlx_new_image(g_cub.ptr, g_map_img.w = g_cub.w * MAP_SC, g_map_img.h = g_cub.h * MAP_SC); //image of maps
-	g_pl_img.img = mlx_new_image(g_cub.ptr, g_pl_img.w = g_tile_p * MAP_SC, g_pl_img.h = g_tile_p * MAP_SC); // image of g_player
+	g_map_img.img = mlx_new_image(g_cub.ptr, g_map_img.w = g_cub.w * MAP_SC, g_map_img.h = g_cub.h * MAP_SC);
+	g_pl_img.img = mlx_new_image(g_cub.ptr, g_pl_img.w = g_tile_p * MAP_SC, g_pl_img.h = g_tile_p * MAP_SC);
 	g_img_3d.img = mlx_new_image(g_cub.ptr, g_img_3d.w = g_cub.w , g_img_3d.h = g_cub.h);
-	create_player2d();//character
+	create_player2d();
 	ray();
 	render3d();
 	//ft_screenshoot();

@@ -43,11 +43,18 @@ void	color_flo_cei(char *line)
 
 	while (*line != 'C' && *line != 'F' && *line)
 		line++;
+
+	r = 0;
+	i = 0;
+	while (line[i] != '\0')
+		if (line[i++] == ',')
+			r++;
+	
 	ptr = ft_split(line + 1, ',');
 	i = 0;
 	while (ptr[i])
 		i++;
-	if (i != 3)
+	if (i != 3 || r != 2)
 			ft_perror("Invalid Color ; Other Param");
 	r = ft_atoi(ptr[0], &r);
 	g = ft_atoi(ptr[1], &g);
@@ -92,7 +99,7 @@ static	void	get_path_texture(char *line)
 		g_text_sp.path = ft_strdup(ptr);
 	if (ptr)
 		free(ptr);
-	}
+}
 
 static	int		is_path_texture(char *line)
 {
@@ -107,20 +114,6 @@ static	int		is_path_texture(char *line)
 	else if (*line == 'S')
 		return((g_is_set.sprite = (g_is_set.sprite == 0) ? 1 : ft_perror("Duplicate Sprite\n")));
 	return (0);
-}
-
-int				is_line_empty(char *line)
-{
-	int i;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n' && line[i] != '\0')
-			return(0);
-		i++;
-	}
-	return (1);
 }
 
 void			import_data()
@@ -140,16 +133,22 @@ void			import_data()
 	{
 		i = 0;
 		return_val = get_next_line(fd, &line);
-		if (is_line_empty(line) && (g_m.h == 0 || g_newline))
+		if (*line == '\0' && (g_m.h == 0 || g_newline))
+		{
+			free(line);
 			continue ;
-		else if (is_line_empty(line) && g_m.h > 0 && g_newline == 0)
+		}
+		else if (*line == '\0' && g_m.h > 0 && g_newline == 0)
 		{
 			g_newline++;
+			free(line);
 			continue ;
 		}
 		else if (g_newline)
 			ft_perror("Map Invalid; Empty Line !!\n");
 		ptr = ft_split(line, ' ');
+		if (!(*ptr))
+			ft_perror("Non Valid cub.config !!\n");
 		if (**ptr == 'R')
 			resolution(ptr);
 		else if (is_path_texture(*ptr))

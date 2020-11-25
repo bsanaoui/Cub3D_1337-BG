@@ -31,7 +31,7 @@ int	update()
 	return (0);
 }
 
-int			is_wall(int walk_dir, int kind_move) // kind_move 1 if move up_down and 0 if right_left
+int			is_wall(int walk_dir, int kind_move)
 {
 	float moveStep;
 	int x_index;
@@ -41,7 +41,7 @@ int			is_wall(int walk_dir, int kind_move) // kind_move 1 if move up_down and 0 
 	x_index = (g_player.x + (cos(kind_move ? g_player.angle : g_player.angle - M_PI / 2) * moveStep)) / g_tile;
 	y_index = (g_player.y + (sin(kind_move ? g_player.angle : g_player.angle - M_PI / 2) * moveStep)) / g_tile;
 	if ((y_index < g_m.h && x_index < g_m.w) && (g_m.map[y_index][x_index] == '1'))
-		return (1);  //error
+		return (1);
 	return (0);
 }
 
@@ -107,43 +107,20 @@ int			key_press(int key)
 	return (key);
 }
 
-void		speedcontrol(int key_pressed)
-{
-	if (key_pressed == 115)
-	{
-		g_player.move_speed += 0.5;
-		g_player.rot_speed += (0.3 * (M_PI / 180));
-	}
-	if (key_pressed == 119)
-	{
-		g_player.move_speed -= 0.5;
-		g_player.rot_speed -= (0.3 * (M_PI / 180));
-	}	
-	if (g_player.move_speed < 0.5)
-		g_player.move_speed = 0.5;
-	if (g_player.move_speed > 8.5)
-		g_player.move_speed = 8.5;
-	if (g_player.rot_speed < (0.6 * (M_PI / 180)))
-		g_player.rot_speed = (0.6 * (M_PI / 180));
-	if (g_player.rot_speed > (5.0 * (M_PI / 180)))
-		g_player.rot_speed = (5.0 * (M_PI / 180));
-}
-
 void		move_player(int key)
 {
-	if (key == 2 && !is_wall(-1, 0) && g_rays[g_nb_ray - 1].dist > 20) // D
+	if (key == 2 && !is_wall(-1, 0) && g_rays[g_nb_ray - 1].dist > 17) // D
 			move_walkDirection_side(1);
 	if (key == 1 && !is_wall(-1, 1)) // S 
 			move_walkDirection_direct(1);
-	if (key == -5 && !is_wall(1, 0) && g_rays[0].dist > 20) // A 
+	if (key == -5 && !is_wall(1, 0) && g_rays[0].dist > 17) // A 
 			move_walkDirection_side(-1);
-	if (key == 13 && !is_wall(1, 1) && g_rays[g_nb_ray / 2].dist > 22) // W
+	if (key == 13 && !is_wall(1, 1) && g_rays[g_nb_ray / 2].dist > 17) // W
 			move_walkDirection_direct(-1);
-	if (key == 123 && g_rays[0].dist > 20) // <-- 
+	if (key == 123 && g_rays[0].dist > 17) // <-- 
 			move_turnDirection(-1);
-	if (key == 124 && g_rays[g_nb_ray - 1].dist > 20) // --> 
+	if (key == 124 && g_rays[g_nb_ray - 1].dist > 17) // -->
 			move_turnDirection(1);
-	speedcontrol(key);
 	if (key == 53)
 		finalize(NULL);
 }

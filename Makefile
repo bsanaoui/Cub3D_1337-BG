@@ -32,7 +32,8 @@ SRC = 	libft/ft_atoi.c \
 		import_data.c \
 		import_data_utils.c \
 		import_map.c \
-		sprites.c
+		sprites.c \
+		check_map.c
 
 OBJ = 	ft_atoi.o \
 		key_event.o \
@@ -49,7 +50,8 @@ OBJ = 	ft_atoi.o \
 		import_data.o \
 		import_data_utils.o \
 		import_map.o \
-		sprites.o
+		sprites.o \
+		check_map.o
 
 all : $(NAME)
 
