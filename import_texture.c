@@ -54,7 +54,7 @@ int		is_path_texture(char *line)
 	else if (*line == 'S')
 		return ((g_is_set.sprite = (g_is_set.sprite == 0) ?
 					1 : ft_perror("Duplicate Sprite\n")));
-	return (0);
+		return (0);
 }
 
 void	get_texture_wall(void)

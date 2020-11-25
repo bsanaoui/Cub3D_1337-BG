@@ -233,5 +233,7 @@ void   			check_map();
 void			fill_map();
 void			get_path_texture(char *line);
 int				is_path_texture(char *line);
+void			resolution(char **ptr);
+void			color_flo_cei(char *line);
 
 #endif
