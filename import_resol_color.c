@@ -25,8 +25,8 @@ void			resolution(char **ptr)
 		i++;
 	if (i != 3)
 		ft_perror("Invalid Resolution ; Other Param\n");
-	g_cub.w = ft_atoi(ptr[1], &len_width);
-	g_cub.h = ft_atoi(ptr[2], &len_width);
+	g_cub.w = ft_atoi_parse(ptr[1], &len_width);
+	g_cub.h = ft_atoi_parse(ptr[2], &len_width);
 	if (g_cub.w <= 0 || g_cub.h <= 0)
 		ft_perror("Invalid Resolution !!\n");
 	g_cub.w = (g_cub.w > 2880) ? 2880 : g_cub.w;
@@ -78,9 +78,9 @@ void			color_flo_cei(char *line)
 		line++;
 	ptr = ft_split(line + 1, ',');
 	check_error_color(line, ptr);
-	r = ft_atoi(ptr[0], &r);
-	g = ft_atoi(ptr[1], &g);
-	b = ft_atoi(ptr[2], &b);
+	r = ft_atoi_parse(ptr[0], &r);
+	g = ft_atoi_parse(ptr[1], &g);
+	b = ft_atoi_parse(ptr[2], &b);
 	if (r < 0 || r > 256 || g < 0 || g > 256 || b < 0 || b > 256)
 		ft_perror("Invalid Color");
 	set_color(*line, r, g, b);

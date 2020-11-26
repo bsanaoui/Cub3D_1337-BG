@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include "get_next_line.h"
+# include "libft.h"
 # include "mlx.h"
 # include <stdio.h>
 
@@ -185,13 +186,7 @@ t_texture		g_text_we;
 t_texture		g_text_ea;
 int				g_keys[7];
 
-void			ft_putnbr(int nb);
-int				ft_atoi(char *str, int *len);
-char			*ft_substr(char const *s, unsigned int start, size_t len);
-char			*ft_strdup(const char *s1);
-char			**ft_split(char const *s, char c);
-void			*ft_memcpy(void *dst, const void *src, size_t n);
-char			*ft_strtrim(char const *s1, char const *set);
+int				ft_atoi_parse(char *str, int *len);
 int				update();
 int				key_press(int key);
 int				key_release(int key);
@@ -206,11 +201,11 @@ void			ray();
 int				is_wall(int walk_dir, int kind_move);
 float			normalize_angle(float angle);
 int				has_wall(int x, int y);
-void			cast_ray(t_ray ray, int ray_count);
 t_cast			horizontal_intersections(t_ray ray);
 t_cast			vertical_intersections(t_ray ray);
 float			dist(float x1, float x2, float y1, float y2);
 void			render3d();
+void			sort_sprites();
 void			create_strip_height(float tab[], int color);
 void			create_strip_wall(float tab[], int offset_x, int n_ray);
 void			create_rays();
@@ -220,16 +215,16 @@ int				finalize(void *s);
 int				is_player(char c);
 void			get_position_player(char c, int pos_x, int pos_y);
 void			get_texture();
-void			render_sprites();
 void			get_sprite_data(t_sp_cast tmp_sp);
+void			create_strip_sprite(float tab[], int num_sp);
 void			clear_sprites();
 void			clear_rays();
 int				ft_perror(const char *s);
 int				is_all_elem();
 void			reset_elem_conf();
 void			import_map();
-int     		check_arr_space(int i, int j);
-void   			check_map();
+int				check_arr_space(int i, int j);
+void			check_map();
 void			fill_map();
 void			get_path_texture(char *line);
 int				is_path_texture(char *line);

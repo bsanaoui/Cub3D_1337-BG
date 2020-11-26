@@ -12,12 +12,26 @@
 
 #include "cub3d.h"
 
-void	render_mini_map()
+void	create_rays(void)
 {
-	g_map_img.img = mlx_new_image(g_cub.ptr, g_cub.w * MAP_SC, g_cub.h * MAP_SC);
-	create_2d_map();//map
-	create_rays(); //g_rays
-	mlx_put_image_to_window(g_cub.ptr, g_cub.win, g_map_img.img, 0, 0); //g_rays and map
+	int i;
+
+	i = 0;
+	while (i < g_nb_ray)
+	{
+		line(g_player.x * MAP_SC, g_player.y * MAP_SC,
+			g_rays[i].wall_hit.x * MAP_SC, g_rays[i].wall_hit.y * MAP_SC);
+		i++;
+	}
+}
+
+void	render_mini_map(void)
+{
+	g_map_img.img = mlx_new_image(g_cub.ptr, g_cub.w * MAP_SC,
+			g_cub.h * MAP_SC);
+	create_2d_map();
+	create_rays();
+	mlx_put_image_to_window(g_cub.ptr, g_cub.win, g_map_img.img, 0, 0);
 	display_player();
 	mlx_destroy_image(g_cub.ptr, g_map_img.img);
 }

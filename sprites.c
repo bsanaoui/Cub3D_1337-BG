@@ -1,151 +1,103 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   g_sprites.c                                :+:      :+:    :+:   */
+/*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsanaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/09 22:18:22 by bsanaoui          #+#    #+#             */
-/*   Updated: 2020/10/09 22:18:24 by bsanaoui         ###   ########.fr       */
+/*   Created: 2020/11/26 13:26:01 by bsanaoui          #+#    #+#             */
+/*   Updated: 2020/11/26 13:26:03 by bsanaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-static void    sort_sprites()
+static	int		in_array_sprites(int p_x, int p_y)
 {
-    int i;
-    int j;
-    t_sprite tmp;
-
-    i = 0;
-    while (i < (g_index_sp - 1))
-    {
-        j = 0;
-        while (j < (g_index_sp - i - 1))
-        {
-            if (g_sprites[j].dist < g_sprites[j + 1].dist)
-            {
-                tmp = g_sprites[j];
-                g_sprites[j] = g_sprites[j + 1];
-                g_sprites[j + 1] = tmp;
-            }
-            j++;
-        }
-        i++;
-    }
-}
-
-int             in_array_sprites(int p_x, int p_y)
-{
-    int i;
-
-    i = 0;
-    while (i < g_index_sp)
-    {
-        if (g_sprites[i].index_x == p_x && g_sprites[i].index_y == p_y)
-        {
-            return (1);
-        }
-        i++;
-    }
-    return (0);
-}
-
-void     get_ray_hit_sp(float s_x, float s_y, int i_sp)
-{
-    double   alpha;
-    t_vector v_ray1;
-    t_vector v_sp;
-
-    v_ray1.x = g_rays[0].wall_hit.x - g_player.x;
-    v_ray1.y = g_rays[0].wall_hit.y - g_player.y;
-    v_sp.x = s_x - g_player.x;
-    v_sp.y = s_y - g_player.y;
-    alpha = -atan2(v_ray1.y, v_ray1.x) + atan2(v_sp.y, v_sp.x);
-    if (alpha > M_PI)
-        alpha -= M_PI * 2;
-    else if (alpha < -M_PI)
-        alpha += M_PI * 2;
-    g_sprites[i_sp].num_ray = (g_nb_ray / g_player.fov) * alpha;
-}
-
-void	create_strip_sprite(float tab[], int num_sp) // tab[] = {float x, float y, float width, float height}
-{
-	int j;
-	int	i;
-	float scale_x;
-    float scale_y;
-	double text_color;
+	int i;
 
 	i = 0;
-    scale_x = g_text_sp.w / tab[2];
-    scale_y= g_text_sp.h / tab[3];
-    text_color = 0;
-	while(i < tab[2])
+	while (i < g_index_sp)
 	{
-        if ((tab[0] + i) < g_nb_ray - 1 && (tab[0] + i) >= 0)
-            if (g_rays[(int)tab[0] + i].dist < g_sprites[num_sp].dist)
-                {
-                    i++;
-                    continue ;
-                }
-		j = 0;
-		while(j < tab[3])
+		if (g_sprites[i].index_x == p_x && g_sprites[i].index_y == p_y)
 		{
-			text_color = g_text_sp.data[(int)(scale_x * i) + (((int)((float)(scale_y * j)) * g_text_sp.size_line / 4))];
-            if (text_color != 0x980088)
-				 put_pixel_in_img(g_img_3d, tab[0] + i, tab[1] + j, text_color);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+static	void	get_ray_hit_sp(float s_x, float s_y, int i_sp)
+{
+	double		alpha;
+	t_vector	v_ray1;
+	t_vector	v_sp;
+
+	v_ray1.x = g_rays[0].wall_hit.x - g_player.x;
+	v_ray1.y = g_rays[0].wall_hit.y - g_player.y;
+	v_sp.x = s_x - g_player.x;
+	v_sp.y = s_y - g_player.y;
+	alpha = -atan2(v_ray1.y, v_ray1.x) + atan2(v_sp.y, v_sp.x);
+	if (alpha > M_PI)
+		alpha -= M_PI * 2;
+	else if (alpha < -M_PI)
+		alpha += M_PI * 2;
+	g_sprites[i_sp].num_ray = (g_nb_ray / g_player.fov) * alpha;
+}
+
+void			get_sprite_data(t_sp_cast tmp_sp)
+{
+	if (!in_array_sprites(tmp_sp.index_x, tmp_sp.index_y))
+	{
+		g_sprites[g_index_sp].x = tmp_sp.hit_x;
+		g_sprites[g_index_sp].y = tmp_sp.hit_y;
+		g_sprites[g_index_sp].index_x = tmp_sp.index_x;
+		g_sprites[g_index_sp].index_y = tmp_sp.index_y;
+		g_sprites[g_index_sp].dist = tmp_sp.dist;
+		get_ray_hit_sp(g_sprites[g_index_sp].x, g_sprites[g_index_sp].y,
+			g_index_sp);
+		g_sprites[g_index_sp].angle = normalize_angle(g_player.angle -
+				g_player.fov / 2) + (g_sprites[g_index_sp].num_ray *
+				(g_player.fov / g_nb_ray));
+		g_index_sp++;
+	}
+}
+
+void			sort_sprites(void)
+{
+	int			i;
+	int			j;
+	t_sprite	tmp;
+
+	i = 0;
+	while (i < (g_index_sp - 1))
+	{
+		j = 0;
+		while (j < (g_index_sp - i - 1))
+		{
+			if (g_sprites[j].dist < g_sprites[j + 1].dist)
+			{
+				tmp = g_sprites[j];
+				g_sprites[j] = g_sprites[j + 1];
+				g_sprites[j + 1] = tmp;
+			}
 			j++;
 		}
 		i++;
 	}
 }
 
-void	render_sprites()
+void			clear_sprites(void)
 {
-	//progress
-    float	spriteHeight;
-	float	correctspriteDistance;
-	float	distanceProjectionPlane;
-    int     i;
+	int n_sp;
 
-    i = 0;
-    sort_sprites();
-    while (i < g_index_sp)
-    {
-        distanceProjectionPlane = (g_cub.w / 2) / tan(g_player.fov / 2);
-        correctspriteDistance = g_sprites[i].dist  * cos(g_sprites[i].angle - g_player.angle);
-	    spriteHeight = (g_tile / correctspriteDistance) * distanceProjectionPlane;
-        if (spriteHeight <= (g_cub.w * 1.5))
-            create_strip_sprite((float[]){g_sprites[i].num_ray - (spriteHeight / 2), (g_cub.h / 2) - (spriteHeight / 2), spriteHeight, spriteHeight}, i);
-        i++;
-    }
-}
-
-void    get_sprite_data(t_sp_cast tmp_sp)
-{
-   if (!in_array_sprites(tmp_sp.index_x, tmp_sp.index_y))
-   {
-        g_sprites[g_index_sp].x = tmp_sp.hit_x;
-        g_sprites[g_index_sp].y = tmp_sp.hit_y;
-        g_sprites[g_index_sp].index_x = tmp_sp.index_x;
-        g_sprites[g_index_sp].index_y = tmp_sp.index_y;
-        g_sprites[g_index_sp].dist = tmp_sp.dist;
-        get_ray_hit_sp(g_sprites[g_index_sp].x, g_sprites[g_index_sp].y, g_index_sp);
-        g_sprites[g_index_sp].angle = normalize_angle(g_player.angle - g_player.fov / 2) + (g_sprites[g_index_sp].num_ray * (g_player.fov / g_nb_ray));
-        g_index_sp++;
-   }
-}
-
-void    clear_sprites()
-{
-    if (g_sprites)
-    {
-         free(g_sprites);
-         g_sprites = NULL;
-    }
-    g_index_sp = 0;
-    g_sprites = (t_sprite *)(malloc(g_n_sp * sizeof(t_sprite)));
+	n_sp = g_n_sp;
+	if (g_sprites)
+	{
+		free(g_sprites);
+		g_sprites = NULL;
+	}
+	g_index_sp = 0;
+	g_sprites = (t_sprite *)(malloc(n_sp * sizeof(t_sprite)));
 }

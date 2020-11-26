@@ -6,13 +6,25 @@
 /*   By: bsanaoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 19:43:39 by bsanaoui          #+#    #+#             */
-/*   Updated: 2019/09/10 19:43:48 by bsanaoui         ###   ########.fr       */
+/*   Updated: 2020/11/26 17:19:09 by bsanaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int		ft_atoi(char *str, int *len)
+static	void	check_error(char *str)
+{
+	if ((*str < '0' || *str > '9') && *str != '\0' && *str != ' ')
+		ft_perror("Invalid character ; !!");
+	while (*str)
+	{
+		if (*str != '\0' && *str != ' ')
+			ft_perror("Invalid character ; !!");
+		str++;
+	}
+}
+
+int				ft_atoi_parse(char *str, int *len)
 {
 	int ch;
 	int sign;
@@ -20,7 +32,7 @@ int		ft_atoi(char *str, int *len)
 	ch = 0;
 	sign = 1;
 	while (*str == ' ' || *str == '\n' || *str == '\v' ||
-	*str == '\r' || *str == '\t' || *str == '\f' || *str == '-')
+			*str == '\r' || *str == '\t' || *str == '\f' || *str == '-')
 	{
 		str++;
 		(*len) += 1;
@@ -37,15 +49,6 @@ int		ft_atoi(char *str, int *len)
 		str++;
 		(*len) += 1;
 	}
-	if ((*str < '0' || *str > '9') && *str != '\0' && *str != ' ')
-			ft_perror("Invalid character ; !!");
-	//str++;
-	while (*str)
-	{
-		if (*str != '\0' && *str != ' ')
-			ft_perror("Invalid character ; !!");
-		str++;
-	}
-	
+	check_error(str);
 	return (sign * ch);
 }

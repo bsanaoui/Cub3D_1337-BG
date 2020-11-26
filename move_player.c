@@ -57,17 +57,17 @@ void			move_turn_dire(int sign_turn_dire)
 
 void			move_player(int key)
 {
-	if (key == 2 && !is_wall(-1, 0) && g_rays[g_nb_ray - 1].dist > 17)
+	if (key == 2 && !is_wall(-1, 0) && g_rays[g_nb_ray - 1].dist > 22)
 		move_walkdirection_side(1);
 	if (key == 1 && !is_wall(-1, 1))
 		move_walkdirection_direct(1);
-	if (key == -5 && !is_wall(1, 0) && g_rays[0].dist > 17)
+	if (key == -5 && !is_wall(1, 0) && g_rays[0].dist > 22)
 		move_walkdirection_side(-1);
-	if (key == 13 && !is_wall(1, 1) && g_rays[g_nb_ray / 2].dist > 17)
+	if (key == 13 && !is_wall(1, 1) && g_rays[g_nb_ray / 2].dist > 18)
 		move_walkdirection_direct(-1);
-	if (key == 123 && g_rays[0].dist > 17)
+	if (key == 123 && g_rays[0].dist > 21)
 		move_turn_dire(-1);
-	if (key == 124 && g_rays[g_nb_ray - 1].dist > 17)
+	if (key == 124 && g_rays[g_nb_ray - 1].dist > 21)
 		move_turn_dire(1);
 	if (key == 53)
 		finalize(NULL);

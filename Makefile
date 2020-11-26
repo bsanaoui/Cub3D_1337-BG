@@ -17,17 +17,17 @@ FLAGS =	-Werror -Wextra -Wall
  
 # *************************** SRC && OBJ ******************************* #
 
-SRC = 	libft/ft_atoi.c \
+SRC = 	ft_atoi_parse.c \
 		key_event.c \
 		create_2d_map.c \
 		player2d.c \
-		Ray.c \
+		ray_casting.c \
 		line.c \
 		put_pixel_in_img.c \
 		utils.c \
-		horizontal_intersections.c \
-		vertical_intersections.c \
-		projection_3d.c \
+		inter_horiz.c \
+		inter_vert.c \
+		render_3d.c \
 		render_mini_map.c \
 		import_data.c \
 		import_data_utils.c \
@@ -36,19 +36,20 @@ SRC = 	libft/ft_atoi.c \
 		check_map.c \
 		import_texture.c \
 		import_resol_color.c \
-		move_player.c
+		move_player.c \
+		render_3d_utils.c
 
-OBJ = 	ft_atoi.o \
+OBJ = 	ft_atoi_parse.o \
 		key_event.o \
 		create_2d_map.o \
 		player2d.o \
-		Ray.o \
+		ray_casting.o \
 		line.o \
 		put_pixel_in_img.o \
 		utils.o \
-		horizontal_intersections.o \
-		vertical_intersections.o \
-		projection_3d.o \
+		inter_horiz.o \
+		inter_vert.o \
+		render_3d.o \
 		render_mini_map.o \
 		import_data.o \
 		import_data_utils.o \
@@ -57,7 +58,8 @@ OBJ = 	ft_atoi.o \
 		check_map.o \
 		import_texture.o \
 		import_resol_color.o \
-		move_player.o
+		move_player.o \
+		render_3d_utils.o
 
 all : $(NAME)
 
