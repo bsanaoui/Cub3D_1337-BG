@@ -230,5 +230,6 @@ void			get_path_texture(char *line);
 int				is_path_texture(char *line);
 void			resolution(char **ptr);
 void			color_flo_cei(char *line);
+void			get_args(int argc, char *argv[]);
 
 #endif

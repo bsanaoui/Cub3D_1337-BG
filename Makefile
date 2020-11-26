@@ -10,63 +10,41 @@
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all fclean clean re bonus
-NAME = Cub3D.a
-CC = gcc #-fsanitize=address -g
-FLAGS =	-Werror -Wextra -Wall
+.PHONY: all fclean clean re
+NAME = cub3D
+CC = gcc -Werror -Wextra -Wall #-fsanitize=address -g
+FLAGS =	 -I /usr/local/include -L /usr/local/lib/ -lmlx -framework OpenGL -framework Appkit
  
 # *************************** SRC && OBJ ******************************* #
 
-SRC = 	ft_atoi_parse.c \
-		key_event.c \
-		create_2d_map.c \
-		player2d.c \
-		ray_casting.c \
-		line.c \
-		put_pixel_in_img.c \
-		utils.c \
-		inter_horiz.c \
-		inter_vert.c \
-		render_3d.c \
-		render_mini_map.c \
-		import_data.c \
-		import_data_utils.c \
-		import_map.c \
+SRC = 	main.c \
+		ImportConfig/ft_atoi_parse.c \
+		ImportConfig/check_map.c \
+		ImportConfig/import_texture.c \
+		ImportConfig/import_resol_color.c \
+		ImportConfig/import_data.c \
+		ImportConfig/import_data_utils.c \
+		ImportConfig/import_map.c \
+		RayCasting/inter_horiz.c \
+		RayCasting/inter_vert.c \
+		RayCasting/ray_casting.c \
+		Utils/utils.c \
+		Utils/line.c \
+		Utils/get_args.c \
+		Utils/put_pixel_in_img.c \
+		Renders/render_3d.c \
+		Renders/render_mini_map.c \
+		Renders/render_3d_utils.c \
+		MiniMap/create_2d_map.c \
+		MiniMap/player2d.c \
 		sprites.c \
-		check_map.c \
-		import_texture.c \
-		import_resol_color.c \
 		move_player.c \
-		render_3d_utils.c
-
-OBJ = 	ft_atoi_parse.o \
-		key_event.o \
-		create_2d_map.o \
-		player2d.o \
-		ray_casting.o \
-		line.o \
-		put_pixel_in_img.o \
-		utils.o \
-		inter_horiz.o \
-		inter_vert.o \
-		render_3d.o \
-		render_mini_map.o \
-		import_data.o \
-		import_data_utils.o \
-		import_map.o \
-		sprites.o \
-		check_map.o \
-		import_texture.o \
-		import_resol_color.o \
-		move_player.o \
-		render_3d_utils.o
+		key_event.c \
 
 all : $(NAME)
 
 $(NAME):
-	@$(CC) $(FLAGS) -c $(SRC) -I.
-	@ar -rc $(NAME) $(OBJ)
-	@ranlib	$(NAME)
+	@$(CC) $(SRC) -I. $(FLAGS) get_next_line.a libft.a  -o $(NAME)
 
 fclean: clean
 	@rm -f $(NAME)
@@ -75,9 +53,3 @@ clean:
 	@rm -f *.o
 
 re: fclean all
-
-main:
-	@make re
-	@$(CC) -I /usr/local/include main.c -L /usr/local/lib/ -lmlx -framework OpenGL -framework Appkit get_next_line.a Cub3D.a libft.a
-	@./a.out
-	@make fclean

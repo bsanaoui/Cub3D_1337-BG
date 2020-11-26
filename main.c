@@ -12,14 +12,6 @@
 
 #include "cub3d.h"
 
-void	ft_screenshoot(void)
-{
-	int fd;
-
-	fd = open("screen.bmp", O_CREAT | O_RDWR);
-	fclose(fopen("screen.bmp", "w"));
-}
-
 void	init_game(void)
 {
 	g_cub.ptr = mlx_init();
@@ -53,7 +45,6 @@ void	render(void)
 	create_player2d();
 	ray();
 	render3d();
-	ft_screenshoot();
 	render_mini_map();
 	mlx_hook(g_cub.win, 2, 1L << 0, key_press, NULL);
 	mlx_hook(g_cub.win, 3, 1L << 1, key_release, NULL);
@@ -64,6 +55,7 @@ void	render(void)
 
 int		main(int argc, char *argv[])
 {
+	get_args(argc,argv);
 	init_game();
 	render();
 	return (0);
