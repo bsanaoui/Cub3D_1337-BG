@@ -12,39 +12,36 @@
 
 #include "cub3d.h"
 
-static	void	ft_screenshoot(void)
+static	int	is_valid_extension(char *file, char *ext)
 {
-	int fd;
+	int i;
+	int	len;
 
-	fd = open("screen.bmp", O_CREAT | O_RDWR);
-	fclose(fopen("screen.bmp", "w"));
+	len = ft_strlen(file);
+	i = len - 4;
+	while (i < len && *ext)
+		if (file[i++] != *(ext++))
+			return (0);
+	return (1);
 }
 
-// static	void	check_args(int argc, char *argv[])
-// {
-// 	if (argc == 2)
-// 	{
-// 		if (ft_strncmp(argv[1], "conf.cub", ft_strlen(argv[1])) != 0)
-// 			ft_perror("wrong config file\n");
-// 	}
-// 	else if (argc == 1)
-// 		ft_perror("No Config Cub are included\n");
-// 	else
-// 		ft_perror("To much arguments\n");
-// }
-
-void			get_args(int argc, char *argv[])
+void		get_args(int argc, char *argv[])
 {
+	screenshot = 0;
+	config = NULL;
 	if (argc >= 2)
 	{
-		if (ft_strncmp(argv[1], "conf.cub", ft_strlen(argv[1])) != 0)
-			ft_perror("wrong config file\n");
+		if (is_valid_extension(argv[1], ".cub"))
+			config = ft_strdup(argv[1]);
+		else
+			ft_perror("You must include a \".cub\" File Extension !!\n");
 	}
 	if (argc == 3)
 	{
-		if (ft_strncmp(argv[2], "--save", ft_strlen(argv[2])) == 0)
-			ft_screenshoot();
-		else 
+		if (ft_strlen(argv[2]) == ft_strlen("--save") &&
+			ft_strncmp(argv[2], "--save", ft_strlen(argv[2])) == 0)
+			screenshot = 1;
+		else
 			ft_perror("second arg must be \"--save\"!!\n");
 	}
 	if (argc == 1 || argc > 3)

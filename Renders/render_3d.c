@@ -50,8 +50,8 @@ void			render3d(void)
 
 	g_img_3d.img = mlx_new_image(g_cub.ptr, g_cub.w, g_cub.h);
 	dst_proj_pl = (g_cub.w / 2) / tan(g_player.fov / 2);
-	i = 0;
-	while (i < g_nb_ray)
+	i = -1;
+	while (++i < g_nb_ray)
 	{
 		corr_wal_dst = g_rays[i].dist * cos(g_rays[i].angle - g_player.angle);
 		strip_h = (g_tile / corr_wal_dst) * dst_proj_pl;
@@ -62,9 +62,10 @@ void			render3d(void)
 		create_strip_height((float[]){i * g_wall_strip_w, strip_h +
 			((g_cub.h - strip_h) / 2), g_wall_strip_w, (g_cub.h - strip_h) / 2},
 				g_floor_color);
-		i++;
 	}
 	render_sprites();
+	if (screenshot)
+		ft_screenshot();
 	mlx_put_image_to_window(g_cub.ptr, g_cub.win, g_img_3d.img, 0, 0);
 	mlx_destroy_image(g_cub.ptr, g_img_3d.img);
 }

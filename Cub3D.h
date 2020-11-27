@@ -36,6 +36,8 @@ int				g_wall_strip_w;
 int				g_index_sp;
 int				g_n_sp;
 int				g_newline;
+int				screenshot;
+char			*config;
 
 typedef struct	s_vector
 {
@@ -57,6 +59,9 @@ typedef struct	s_img
 	int			h;
 	int			w;
 	int			*data;
+	int			bits_per_pixel;
+	int			size_line;
+	int			endian;
 }				t_img;
 
 typedef struct	s_cub
@@ -170,6 +175,27 @@ typedef struct	s_is_set_el
 	int			player;
 }				t_is_set_el;
 
+typedef struct	s_bitmap
+{
+	int32_t		width;
+	int32_t 	height;
+	uint16_t 	bitcount;
+	int 		width_in_bytes;
+	uint32_t	imagesize;
+	uint32_t	bisize;
+	uint32_t	bfoffbits;
+	uint32_t	filesize;
+	uint16_t	biplanes;	
+}				t_bitmap;
+
+typedef	struct	s_img_bmp
+{
+	char		*data;
+	int			bits_per_pixel;
+	int			size_line;
+	int			endian;
+}				t_img_bmp;
+
 t_map			g_m;
 t_cub			g_cub;
 t_img			g_map_img;
@@ -231,5 +257,6 @@ int				is_path_texture(char *line);
 void			resolution(char **ptr);
 void			color_flo_cei(char *line);
 void			get_args(int argc, char *argv[]);
+void			ft_screenshot();
 
 #endif

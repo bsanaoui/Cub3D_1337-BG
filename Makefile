@@ -29,6 +29,7 @@ SRC = 	main.c \
 		RayCasting/inter_vert.c \
 		RayCasting/ray_casting.c \
 		Utils/utils.c \
+		Utils/screen_bmp.c \
 		Utils/line.c \
 		Utils/get_args.c \
 		Utils/put_pixel_in_img.c \
