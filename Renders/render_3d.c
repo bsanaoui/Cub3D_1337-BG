@@ -12,6 +12,9 @@
 
 #include "cub3d.h"
 
+float	g_dst_proj_pl;
+float	g_dst;
+
 static	float	get_offset_x(int ray_n)
 {
 	if (g_rays[ray_n].was_hit_vertical)
@@ -46,15 +49,15 @@ void			render3d(void)
 	int		i;
 	float	strip_h;
 	float	corr_wal_dst;
-	float	dst_proj_pl;
 
 	g_img_3d.img = mlx_new_image(g_cub.ptr, g_cub.w, g_cub.h);
-	dst_proj_pl = (g_cub.w / 2) / tan(g_player.fov / 2);
+	g_dst_proj_pl = (g_cub.w / 2) / tan(g_player.fov / 2);
 	i = -1;
 	while (++i < g_nb_ray)
 	{
-		corr_wal_dst = g_rays[i].dist * cos(g_rays[i].angle - g_player.angle);
-		strip_h = (g_tile / corr_wal_dst) * dst_proj_pl;
+		g_dst = (g_rays[i].dist < 2) ? 2 : g_rays[i].dist;
+		corr_wal_dst = g_dst * cos(g_rays[i].angle - g_player.angle);
+		strip_h = (g_tile / corr_wal_dst) * g_dst_proj_pl;
 		create_strip_wall((float[]){i * g_wall_strip_w, (g_cub.h / 2) -
 				(strip_h / 2), g_wall_strip_w, strip_h}, get_offset_x(i), i);
 		create_strip_height((float[]){i * g_wall_strip_w, 0,
@@ -64,7 +67,7 @@ void			render3d(void)
 				g_floor_color);
 	}
 	render_sprites();
-	if (screenshot)
+	if (g_screenshot)
 		ft_screenshot();
 	mlx_put_image_to_window(g_cub.ptr, g_cub.win, g_img_3d.img, 0, 0);
 	mlx_destroy_image(g_cub.ptr, g_img_3d.img);

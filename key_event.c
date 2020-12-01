@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int			update(void)
+int				update(void)
 {
 	int i;
 
@@ -26,11 +26,10 @@ int			update(void)
 	clear_sprites();
 	ray();
 	render3d();
-	render_mini_map();
 	return (0);
 }
 
-int			key_release(int key)
+int				key_release(int key)
 {
 	if (key == 13)
 		g_keys[0] = 0;
@@ -47,7 +46,16 @@ int			key_release(int key)
 	return (key);
 }
 
-int			key_press(int key)
+static	void	reset_key(void)
+{
+	int i;
+
+	i = 0;
+	while (i < 7)
+		g_keys[i++] = 0;
+}
+
+int				key_press(int key)
 {
 	if (key == 13)
 		g_keys[0] = key;
@@ -63,5 +71,7 @@ int			key_press(int key)
 		g_keys[5] = key;
 	if (key == 53)
 		g_keys[6] = key;
+	if (key == 260)
+		reset_key();
 	return (key);
 }

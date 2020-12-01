@@ -15,8 +15,8 @@
 void	init_game(void)
 {
 	g_cub.ptr = mlx_init();
-	g_player.rot_speed = (1.5 * (M_PI / 180));
-	g_player.move_speed = 3.2;
+	g_player.rot_speed = (1.6 * (M_PI / 180));
+	g_player.move_speed = 2.5;
 	g_newline = 0;
 	reset_elem_conf();
 	import_data();
@@ -45,7 +45,6 @@ void	render(void)
 	create_player2d();
 	ray();
 	render3d();
-	render_mini_map();
 	mlx_hook(g_cub.win, 2, 1L << 0, key_press, NULL);
 	mlx_hook(g_cub.win, 3, 1L << 1, key_release, NULL);
 	mlx_hook(g_cub.win, 17, 0L, finalize, NULL);
@@ -55,7 +54,7 @@ void	render(void)
 
 int		main(int argc, char *argv[])
 {
-	get_args(argc,argv);
+	get_args(argc, argv);
 	init_game();
 	render();
 	return (0);

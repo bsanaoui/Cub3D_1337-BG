@@ -32,14 +32,8 @@ int				ft_atoi_parse(char *str, int *len)
 	ch = 0;
 	sign = 1;
 	while (*str == ' ' || *str == '\n' || *str == '\v' ||
-			*str == '\r' || *str == '\t' || *str == '\f' || *str == '-')
+			*str == '\r' || *str == '\t' || *str == '\f')
 	{
-		str++;
-		(*len) += 1;
-	}
-	if (*str == '-')
-	{
-		sign = -1;
 		str++;
 		(*len) += 1;
 	}

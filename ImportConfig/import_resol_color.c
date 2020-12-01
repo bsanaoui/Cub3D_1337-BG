@@ -23,7 +23,7 @@ void			resolution(char **ptr)
 	i = 0;
 	while (ptr[i])
 		i++;
-	if (i != 3)
+	if (i != 3 || ft_strlen(ptr[0]) != 1)
 		ft_perror("Invalid Resolution ; Other Param\n");
 	g_cub.w = ft_atoi_parse(ptr[1], &len_width);
 	g_cub.h = ft_atoi_parse(ptr[2], &len_width);
@@ -81,8 +81,8 @@ void			color_flo_cei(char *line)
 	r = ft_atoi_parse(ptr[0], &r);
 	g = ft_atoi_parse(ptr[1], &g);
 	b = ft_atoi_parse(ptr[2], &b);
-	if (r < 0 || r > 256 || g < 0 || g > 256 || b < 0 || b > 256)
-		ft_perror("Invalid Color");
+	if (r < 0 || r >= 256 || g < 0 || g >= 256 || b < 0 || b >= 256)
+		ft_perror("Invalid Color\n");
 	set_color(*line, r, g, b);
 	i = 0;
 	while (ptr[i])

@@ -62,7 +62,7 @@ static	void	fill_data(char *line)
 static	void	init_var(int *return_val, int *fd)
 {
 	*return_val = 1;
-	if ((*fd = open(config, O_RDONLY)) == -1)
+	if ((*fd = open(g_config, O_RDONLY)) == -1)
 		ft_perror("There is no file !! \n");
 	g_m.w = 0;
 	g_m.h = 0;
@@ -89,5 +89,5 @@ void			import_data(void)
 		ft_perror("Missing Element(s) in Config File !!\n");
 	fill_map();
 	get_texture();
-	close(open(config, O_RDONLY));
+	close(open(g_config, O_RDONLY));
 }
