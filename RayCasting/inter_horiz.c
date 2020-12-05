@@ -44,8 +44,8 @@ static	void	add_tmp_sprite(t_cast *cast, double hit_x, double hit_y)
 
 static t_cast	increment_steps(t_cast cast)
 {
-	while (cast.next_touch_x >= 0 && cast.next_touch_x <= g_cub.w
-		&& cast.next_touch_y >= 0 && cast.next_touch_y <= g_cub.h)
+	while (cast.next_touch_x >= 0 && cast.next_touch_x <= g_tile * g_m.w
+		&& cast.next_touch_y >= 0 && cast.next_touch_y <= g_tile * g_m.h)
 	{
 		if (has_wall(cast.next_touch_x, cast.next_touch_y - cast.minus_y) == 1)
 		{

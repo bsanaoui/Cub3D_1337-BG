@@ -12,7 +12,18 @@
 
 #include "cub3d.h"
 
-void	get_path_texture(char *line)
+int		g_bpp;
+int		g_endian;
+
+static	int	is_val_ext(char *file)
+{
+	if (is_valid_ext(file, ".xpm") ||
+		is_valid_ext(file, ".XPM"))
+		return (1);
+	return (0);
+}
+
+void		get_path_texture(char *line)
 {
 	char *ptr;
 
@@ -37,7 +48,7 @@ void	get_path_texture(char *line)
 		free(ptr);
 }
 
-int		is_path_texture(char *line)
+int			is_path_texture(char *line)
 {
 	if (*line == 'N' && *(line + 1) == 'O')
 		return ((g_is_set.text_no = (g_is_set.text_no == 0) ?
@@ -57,51 +68,40 @@ int		is_path_texture(char *line)
 		return (0);
 }
 
-void	get_texture_wall(void)
+void		get_texture_sprite(void)
 {
-	int bits_per_pixel;
-	int endian;
-
-	bits_per_pixel = 0;
-	endian = 0;
-	if (!(g_text_no.img = mlx_xpm_file_to_image(g_cub.ptr, g_text_no.path,
-					&g_text_no.w, &g_text_no.h)))
-		ft_perror("NO Texture Not valid !\n");
-	g_text_no.data = (int *)mlx_get_data_addr(g_text_no.img, &bits_per_pixel,
-			&g_text_no.size_line, &endian);
-	if (!(g_text_so.img = mlx_xpm_file_to_image(g_cub.ptr, g_text_so.path,
-					&g_text_so.w, &g_text_so.h)))
-		ft_perror("SO Texture Not valid !\n");
-	g_text_so.data = (int *)mlx_get_data_addr(g_text_so.img, &bits_per_pixel,
-			&g_text_so.size_line, &endian);
-	if (!(g_text_ea.img = mlx_xpm_file_to_image(g_cub.ptr, g_text_ea.path,
-					&g_text_ea.w, &g_text_ea.h)))
-		ft_perror("EA Texture Not valid !\n");
-	g_text_ea.data = (int *)mlx_get_data_addr(g_text_ea.img, &bits_per_pixel,
-			&g_text_ea.size_line, &endian);
-	if (!(g_text_we.img = mlx_xpm_file_to_image(g_cub.ptr, g_text_we.path,
-					&g_text_we.w, &g_text_we.h)))
-		ft_perror("WE Texture Not valid !\n");
-	g_text_we.data = (int *)mlx_get_data_addr(g_text_we.img, &bits_per_pixel,
-			&g_text_we.size_line, &endian);
-}
-
-void	get_texture_sprite(void)
-{
-	int		bits_per_pixel;
-	int		endian;
-
-	bits_per_pixel = 0;
-	endian = 0;
+	g_bpp = 0;
+	g_endian = 0;
 	if (!(g_text_sp.img = mlx_xpm_file_to_image(g_cub.ptr, g_text_sp.path,
-					&g_text_sp.w, &g_text_sp.h)))
+		&g_text_sp.w, &g_text_sp.h)) || !is_val_ext(g_text_sp.path))
 		ft_perror("Sprite Not valid !\n");
-	g_text_sp.data = (int *)mlx_get_data_addr(g_text_sp.img, &bits_per_pixel,
-			&g_text_sp.size_line, &endian);
+	g_text_sp.data = (int *)mlx_get_data_addr(g_text_sp.img, &g_bpp,
+			&g_text_sp.size_line, &g_endian);
 }
 
-void	get_texture(void)
+void		get_texture(void)
 {
-	get_texture_wall();
+	g_bpp = 0;
+	g_endian = 0;
+	if (!(g_text_no.img = mlx_xpm_file_to_image(g_cub.ptr, g_text_no.path,
+		&g_text_no.w, &g_text_no.h)) || !is_val_ext(g_text_no.path))
+		ft_perror("NO Texture Not valid !\n");
+	g_text_no.data = (int *)mlx_get_data_addr(g_text_no.img, &g_bpp,
+			&g_text_no.size_line, &g_endian);
+	if (!(g_text_so.img = mlx_xpm_file_to_image(g_cub.ptr, g_text_so.path,
+		&g_text_so.w, &g_text_so.h)) || !is_val_ext(g_text_so.path))
+		ft_perror("SO Texture Not valid !\n");
+	g_text_so.data = (int *)mlx_get_data_addr(g_text_so.img, &g_bpp,
+			&g_text_so.size_line, &g_endian);
+	if (!(g_text_ea.img = mlx_xpm_file_to_image(g_cub.ptr, g_text_ea.path,
+		&g_text_ea.w, &g_text_ea.h)) || !is_val_ext(g_text_ea.path))
+		ft_perror("EA Texture Not valid !\n");
+	g_text_ea.data = (int *)mlx_get_data_addr(g_text_ea.img, &g_bpp,
+			&g_text_ea.size_line, &g_endian);
+	if (!(g_text_we.img = mlx_xpm_file_to_image(g_cub.ptr, g_text_we.path,
+		&g_text_we.w, &g_text_we.h)) || !is_val_ext(g_text_we.path))
+		ft_perror("WE Texture Not valid !\n");
+	g_text_we.data = (int *)mlx_get_data_addr(g_text_we.img, &g_bpp,
+			&g_text_we.size_line, &g_endian);
 	get_texture_sprite();
 }

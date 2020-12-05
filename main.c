@@ -15,11 +15,11 @@
 void	init_game(void)
 {
 	g_cub.ptr = mlx_init();
-	g_player.rot_speed = (1.6 * (M_PI / 180));
-	g_player.move_speed = 2.5;
 	g_newline = 0;
 	reset_elem_conf();
 	import_data();
+	g_player.rot_speed = (1.6 * (M_PI / 180));
+	g_player.move_speed = 4.7;
 	g_player.turn_dir = 0;
 	g_player.walk_dir = 0;
 	g_player.fov = 60 * M_PI / 180;

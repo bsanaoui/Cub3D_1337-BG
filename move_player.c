@@ -18,7 +18,7 @@ int				is_wall(int walk_dir, int kind_move)
 	int		x_inde;
 	int		y_inde;
 
-	move_stp = walk_dir * g_player.move_speed * g_cub.w / 150;
+	move_stp = walk_dir * g_player.move_speed;
 	x_inde = (g_player.x + (cos(kind_move ? g_player.angle :
 			g_player.angle - M_PI / 2) * move_stp)) / g_tile;
 	y_inde = (g_player.y + (sin(kind_move ? g_player.angle :
@@ -59,7 +59,7 @@ void			move_player(int key)
 {
 	float coli;
 
-	coli = (g_cub.h > g_cub.w) ? g_cub.h / 46 : g_cub.w / 60;
+	coli = (g_cub.h * g_cub.w) * 1.5 / 100000;
 	if (key == 2 && !is_wall(-1, 0) && g_rays[g_nb_ray - 1].dist > coli)
 		move_walkdirection_side(1);
 	if (key == 1 && !is_wall(-1, 1))

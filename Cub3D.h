@@ -21,14 +21,14 @@
 # include "mlx.h"
 # include <stdio.h>
 
-# define MAP_SC 0.3
+# define MAP_SC 1
 # define PLAYER_COLOR 16711680
 # define RAY_COLOR 16776960
 # define MAP_COLOR 3093151
 # define SPRITE_COLOR 14557865
 
-float			g_tile;
-float			g_tile_p;
+int				g_tile;
+int				g_tile_p;
 int				g_floor_color;
 int				g_ceil_color;
 int				g_nb_ray;
@@ -179,7 +179,7 @@ typedef struct	s_bitmap
 {
 	int32_t		width;
 	int32_t		height;
-	uint16_t	bitcount;
+	uint16_t	bpp;
 	int			width_in_bytes;
 	uint32_t	imagesize;
 	uint32_t	bisize;
@@ -212,7 +212,7 @@ t_texture		g_text_we;
 t_texture		g_text_ea;
 int				g_keys[7];
 
-int				ft_atoi_parse(char *str, int *len);
+long double		ft_atoi_parse(char *str, int *len);
 int				update();
 int				key_press(int key);
 int				key_release(int key);
@@ -259,5 +259,6 @@ void			color_flo_cei(char *line);
 void			get_args(int argc, char *argv[]);
 void			ft_screenshot();
 float			colli(float dst);
+int				is_valid_ext(char *file, char *ext);
 
 #endif

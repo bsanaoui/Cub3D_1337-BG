@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-static	int	is_valid_extension(char *file, char *ext)
+int			is_valid_ext(char *file, char *ext)
 {
 	int i;
 	int	len;
@@ -31,7 +31,7 @@ void		get_args(int argc, char *argv[])
 	g_config = NULL;
 	if (argc >= 2)
 	{
-		if (is_valid_extension(argv[1], ".cub"))
+		if (is_valid_ext(argv[1], ".cub"))
 			g_config = ft_strdup(argv[1]);
 		else
 			ft_perror("You must include a \".cub\" File Extension !!\n");

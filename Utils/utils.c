@@ -26,6 +26,7 @@ int		finalize(void *s)
 
 int		ft_perror(const char *s)
 {
+	write(1, "Error\n", 7);
 	perror(s);
 	exit(EXIT_FAILURE);
 	return (0);

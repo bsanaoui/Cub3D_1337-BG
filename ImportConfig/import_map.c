@@ -35,12 +35,9 @@ void			import_map(char *line)
 static	void	get_tile(void)
 {
 	if (ft_strlen(g_m.ptr) < 4)
-		ft_perror("No Map!!|n");
-	g_tile = ((g_cub.h / g_m.h) < (g_cub.w / g_m.w)) ?
-		(g_cub.h / g_m.h) : (g_cub.w / g_m.w);
-	if (g_tile == 0)
-		g_tile = 1;
-	g_tile_p = g_cub.w / g_m.w / 2;
+		ft_perror("No Map!!\n");
+	g_tile = 64;
+	g_tile_p = g_tile / 2;
 }
 
 static	void	fill_column(int i, char *line)

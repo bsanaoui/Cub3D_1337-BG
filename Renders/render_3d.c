@@ -13,9 +13,8 @@
 #include "cub3d.h"
 
 float	g_dst_proj_pl;
-float	g_dst;
 
-static	float	get_offset_x(int ray_n)
+static	int		get_offset_x(int ray_n)
 {
 	if (g_rays[ray_n].was_hit_vertical)
 		return ((int)g_rays[ray_n].wall_hit.y % (int)g_tile);
@@ -55,15 +54,14 @@ void			render3d(void)
 	i = -1;
 	while (++i < g_nb_ray)
 	{
-		g_dst = (g_rays[i].dist < 2) ? 2 : g_rays[i].dist;
-		corr_wal_dst = g_dst * cos(g_rays[i].angle - g_player.angle);
+		corr_wal_dst = g_rays[i].dist * cos(g_rays[i].angle - g_player.angle);
 		strip_h = (g_tile / corr_wal_dst) * g_dst_proj_pl;
 		create_strip_wall((float[]){i * g_wall_strip_w, (g_cub.h / 2) -
-				(strip_h / 2), g_wall_strip_w, strip_h}, get_offset_x(i), i);
-		create_strip_height((float[]){i * g_wall_strip_w, 0,
+				(strip_h / 2), strip_h}, get_offset_x(i), i);
+		create_strip_height((float[]){i * g_wall_strip_w,
 				g_wall_strip_w, (g_cub.h - strip_h) / 2 }, g_ceil_color);
 		create_strip_height((float[]){i * g_wall_strip_w, strip_h +
-			((g_cub.h - strip_h) / 2), g_wall_strip_w, (g_cub.h - strip_h) / 2},
+			((g_cub.h - strip_h) / 2), (g_cub.h - strip_h) / 2},
 				g_floor_color);
 	}
 	render_sprites();

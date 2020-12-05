@@ -29,8 +29,19 @@ int				update(void)
 	return (0);
 }
 
+static	void	reset_key(void)
+{
+	int i;
+
+	i = 0;
+	while (i < 7)
+		g_keys[i++] = 0;
+}
+
 int				key_release(int key)
 {
+	if (key == 260 || key == 259)
+		reset_key();
 	if (key == 13)
 		g_keys[0] = 0;
 	if (key == 1)
@@ -44,15 +55,6 @@ int				key_release(int key)
 	if (key == 124)
 		g_keys[5] = 0;
 	return (key);
-}
-
-static	void	reset_key(void)
-{
-	int i;
-
-	i = 0;
-	while (i < 7)
-		g_keys[i++] = 0;
 }
 
 int				key_press(int key)
@@ -71,7 +73,5 @@ int				key_press(int key)
 		g_keys[5] = key;
 	if (key == 53)
 		g_keys[6] = key;
-	if (key == 260)
-		reset_key();
 	return (key);
 }

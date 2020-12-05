@@ -64,8 +64,8 @@ void			ft_screenshot(void)
 	bmp.biplanes = 1;
 	bmp.width = g_cub.w;
 	bmp.height = g_cub.h;
-	bmp.bitcount = 24;
-	bmp.width_in_bytes = ((bmp.width * bmp.bitcount + 31) / 32) * 4;
+	bmp.bpp = 24;
+	bmp.width_in_bytes = ((bmp.width * bmp.bpp + 31) / 32) * 4;
 	bmp.imagesize = bmp.width_in_bytes * bmp.height;
 	bmp.filesize = 54 + bmp.imagesize;
 	ft_memcpy(g_header, "BM", 2);
@@ -75,7 +75,7 @@ void			ft_screenshot(void)
 	ft_memcpy(g_header + 18, &bmp.width, 4);
 	ft_memcpy(g_header + 22, &bmp.height, 4);
 	ft_memcpy(g_header + 26, &bmp.biplanes, 2);
-	ft_memcpy(g_header + 28, &bmp.bitcount, 2);
+	ft_memcpy(g_header + 28, &bmp.bpp, 2);
 	ft_memcpy(g_header + 34, &bmp.imagesize, 4);
 	bitmap_calc(bmp.imagesize, bmp.width, bmp.height, bmp.width_in_bytes);
 	exit(EXIT_SUCCESS);
